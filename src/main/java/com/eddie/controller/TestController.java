@@ -25,16 +25,16 @@ public class TestController {
 
     @GetMapping("me/player")
     public JsonNode checkUserInfo(Player player){
-        return mapper.createObjectNode().put("message","you are a player!");
+        return mapper.createObjectNode().put("message",player.getName() +"! you are a player!");
     }
 
     @GetMapping("me/npc")
     public JsonNode checkUserInfo(NPC npc){
-        return mapper.createObjectNode().put("message","you are a NPC!");
+        return mapper.createObjectNode().put("message",npc.getName() +"! you are a NPC!");
     }
 
     @GetMapping("me/member")
     public JsonNode checkUserInfo(Member member){
-        return mapper.createObjectNode().put("message","you are a member!");
+        return mapper.createObjectNode().put("message",member.getName() +"!you are a member!");
     }
 }
