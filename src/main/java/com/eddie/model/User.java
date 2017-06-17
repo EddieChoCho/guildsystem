@@ -1,11 +1,16 @@
 package com.eddie.model;
 
+import com.eddie.model.enums.Role;
+import com.eddie.model.interfaces.Person;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class User extends AbstractEntity {
+@JsonIgnoreProperties({ "password" })
+public class User extends AbstractEntity implements Person{
     @NotNull
     @Column(nullable = false)
     private String name;
@@ -13,6 +18,7 @@ public class User extends AbstractEntity {
     private String email;
     @Column(nullable = false)
     private String password;
+    private Role role;
 
     public String getName() {
         return name;
@@ -36,5 +42,13 @@ public class User extends AbstractEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
