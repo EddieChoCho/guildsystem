@@ -12,24 +12,15 @@ import com.eddie.model.pojo.GuildPartner;
 
 public class NpcFactory {
 
-    public NPC factorNpc(User user) throws BasicException {
-        if(!user.getRole().getBasicRole().equals(BasicRole.NPC)){
-            throw new RoleException("You are not a NPC!");
-        }
+    public NPC provideNpc(User user) throws BasicException {
         return new NpcBuilder(user).buildNpc();
     }
 
-    public GuildPartner factorGuildPartner(User user) throws BasicException {
-        if(!user.getRole().equals(Role.PARTNER)){
-            throw new RoleException("You are not a Partner!");
-        }
+    public GuildPartner provideGuildPartner(User user) throws BasicException {
         return new NpcBuilder(user).buildGuildPartner();
     }
 
-    public GuildManager factorGuildManager(User user) throws BasicException {
-        if(!user.getRole().equals(Role.MEMBER)){
-            throw new RoleException("You are not a Manager!");
-        }
+    public GuildManager provideGuildManager(User user) throws BasicException {
         return new NpcBuilder(user).buildGuildManager();
     }
 }

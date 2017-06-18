@@ -23,6 +23,6 @@ public class NpcResolver extends AbstractUserResolver implements HandlerMethodAr
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
         User user = this.getUserFromSession(nativeWebRequest);
-        return npcFactory.factorNpc(user);
+        return npcFactory.provideNpc(user);
     }
 }

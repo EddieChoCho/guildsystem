@@ -25,6 +25,6 @@ public class PlayerResolver extends AbstractUserResolver implements HandlerMetho
     @Override
     public Player resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
         User user = this.getUserFromSession(nativeWebRequest);
-        return playerFactory.factorPlayer(user);
+        return playerFactory.providePlayer(user);
     }
 }
