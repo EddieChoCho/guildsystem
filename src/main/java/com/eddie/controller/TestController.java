@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/rest/test/")
 public class TestController {
 
-    @Autowired
     private ObjectMapper mapper;
 
+    @Autowired
+    public TestController(ObjectMapper mapper){
+        this.mapper = mapper;
+    }
     @GetMapping("me/")
     public User checkUserInfo(User user){
         return user;

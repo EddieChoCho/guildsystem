@@ -42,7 +42,7 @@ public class PlayerBuilder extends AbstractPersonBuilder {
     }
 
     public Member buildMember() throws BasicException {
-        roleChecking(this.role, Role.MANAGER);
+        roleChecking(this.role, Role.MEMBER);
         Member member = new Member();
         member.setId(this.id);
         member.setName(this.name);

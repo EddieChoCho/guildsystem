@@ -20,6 +20,16 @@ public class User extends AbstractEntity implements Person{
     private String password;
     private Role role;
 
+    public User(){
+
+    }
+    public User(String name, String email, String password, Role role){
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
     public String getName() {
         return name;
     }

@@ -13,8 +13,13 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Component
 public class NpcResolver extends AbstractUserResolver implements HandlerMethodArgumentResolver {
-    @Autowired
+
     NpcFactory npcFactory;
+
+    @Autowired
+    public NpcResolver(NpcFactory npcFactory){
+        this.npcFactory = npcFactory;
+    }
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
         return methodParameter.getParameterType().equals(NPC.class);

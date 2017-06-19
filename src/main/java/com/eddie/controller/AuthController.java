@@ -17,30 +17,28 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/rest/auth/")
 public class AuthController {
-    @Autowired
+
     private ObjectMapper mapper;
-    @Autowired
+
     private UserService userService;
+
+    @Autowired
+    public AuthController(ObjectMapper mapper, UserService userService) {
+        this.mapper = mapper;
+        this.userService = userService;
+    }
     @GetMapping()
     public JsonNode helloWorld(){
         return mapper.createObjectNode().put("message","hello");
     }
 
-    @PostMapping("player/register/")
-    public JsonNode registerPlayer(@RequestParam(value = "name") String name,
+    @PostMapping("{role}/register/")
+    public JsonNode registerPlayer(@PathVariable Role role,
+                                   @RequestParam(value = "name") String name,
                                    @RequestParam(value = "email") String email,
                                    @RequestParam(value = "password") String password,
                                    @RequestParam(value = "confirm") String confirm) throws BasicException{
-        this.register(name,email,password,confirm, Role.MEMBER);
-        return mapper.createObjectNode().put("message","success");
-    }
-
-    @PostMapping("npc/register/")
-    public JsonNode registerNpc(@RequestParam(value = "name") String name,
-                                   @RequestParam(value = "email") String email,
-                                   @RequestParam(value = "password") String password,
-                                   @RequestParam(value = "confirm") String confirm) throws BasicException{
-        this.register(name,email,password,confirm, Role.PARTNER);
+        this.register(name,email,password,confirm, role);
         return mapper.createObjectNode().put("message","success");
     }
 

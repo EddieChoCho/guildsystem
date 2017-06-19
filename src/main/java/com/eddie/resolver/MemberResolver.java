@@ -14,8 +14,12 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @Component
 public class MemberResolver extends AbstractUserResolver implements HandlerMethodArgumentResolver {
 
-    @Autowired
     PlayerFactory playerFactory;
+
+    @Autowired
+    public MemberResolver(PlayerFactory playerFactory){
+        this.playerFactory = playerFactory;
+    }
 
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
