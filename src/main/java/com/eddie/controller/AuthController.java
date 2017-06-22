@@ -1,31 +1,28 @@
 package com.eddie.controller;
 
-import com.eddie.builder.UserBuilder;
-import com.eddie.exception.AuthException;
-import com.eddie.exception.BasicException;
-import com.eddie.model.User;
+import com.eddie.exception.GuildSystemException;
 import com.eddie.model.enums.Role;
-import com.eddie.service.UserService;
+import com.eddie.service.AuthService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/rest/auth/")
 public class AuthController {
 
+    private AuthService authService;
+
     private ObjectMapper mapper;
 
-    private UserService userService;
-
     @Autowired
-    public AuthController(ObjectMapper mapper, UserService userService) {
+    public AuthController(AuthService authService, ObjectMapper mapper) {
+        this.authService = authService;
         this.mapper = mapper;
-        this.userService = userService;
+
     }
     @GetMapping()
     public JsonNode helloWorld(){
@@ -33,44 +30,29 @@ public class AuthController {
     }
 
     @PostMapping("{role}/register/")
-    public JsonNode registerPlayer(@PathVariable Role role,
-                                   @RequestParam(value = "name") String name,
-                                   @RequestParam(value = "email") String email,
-                                   @RequestParam(value = "password") String password,
-                                   @RequestParam(value = "confirm") String confirm) throws BasicException{
-        this.register(name,email,password,confirm, role);
+    public JsonNode register(@PathVariable Role role,
+                             @RequestParam(value = "name") String name,
+                             @RequestParam(value = "email") String email,
+                             @RequestParam(value = "password") String password,
+                             @RequestParam(value = "confirm") String confirm) throws GuildSystemException {
+        authService.register(name,email,password,confirm, role);
         return mapper.createObjectNode().put("message","success");
     }
+
 
     @PostMapping("login/")
     public JsonNode login(@RequestParam(value = "email") String email,
                           @RequestParam(value = "password") String password,
-                          HttpSession session) throws BasicException{
-        User user = userService.findOneByEmail(email);
-        userService.checkPassword(user, password);
-        this.login(session,user);
+                          HttpSession session) throws GuildSystemException {
+        authService.login(session, email, password);
         return mapper.createObjectNode().put("message","success");
     }
 
     @GetMapping("logout/")
-    public JsonNode logout(User user, HttpSession session) throws BasicException{
-        this.logout(session);
+    public JsonNode logout(HttpSession session) throws GuildSystemException {
+        authService.logout(session);
         return mapper.createObjectNode().put("message","success");
     }
 
-    private void register(String name, String email, String password, String confirm, Role role) throws BasicException {
-        if(!password.equals(confirm)){
-            throw new AuthException("The password is not match the confirm");
-        }
-        User user = new UserBuilder(name,email,password, role).build();
-        userService.add(user);
-    }
 
-    private void login(HttpSession session, User user){
-        session.setAttribute("user",user);
-    }
-
-    private void logout(HttpSession session){
-        session.removeAttribute("user");
-    }
 }

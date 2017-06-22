@@ -1,6 +1,6 @@
 package com.eddie.builder;
 
-import com.eddie.exception.BasicException;
+import com.eddie.exception.GuildSystemException;
 import com.eddie.model.enums.BasicRole;
 import com.eddie.model.enums.Role;
 import com.eddie.model.interfaces.Person;
@@ -21,33 +21,21 @@ public class PlayerBuilder extends AbstractPersonBuilder {
         this.role = person.getRole();
     }
 
-    public Player buildPlayer() throws BasicException {
-        roleChecking(this.role.getBasicRole(), BasicRole.PLAYER);
-        Member member = new Member();
-        member.setId(this.id);
-        member.setName(this.name);
-        member.setEmail(this.email);
-        member.setRole(this.role);
+    public Player buildPlayer() throws GuildSystemException {
+        roleChecking(role.getBasicRole(), BasicRole.PLAYER);
+        Member member = new Member(id,name,email,role);
         return member;
     }
 
-    public Leader buildLeader() throws BasicException {
+    public Leader buildLeader() throws GuildSystemException {
         roleChecking(this.role, Role.LEADER);
-        Leader leader = new Leader();
-        leader.setId(this.id);
-        leader.setName(this.name);
-        leader.setEmail(this.email);
-        leader.setRole(this.role);
+        Leader leader = new Leader(id,name,email,role);
         return leader;
     }
 
-    public Member buildMember() throws BasicException {
+    public Member buildMember() throws GuildSystemException {
         roleChecking(this.role, Role.MEMBER);
-        Member member = new Member();
-        member.setId(this.id);
-        member.setName(this.name);
-        member.setEmail(this.email);
-        member.setRole(this.role);
+        Member member = new Member(id,name,email,role);
         return member;
     }
 

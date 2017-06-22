@@ -14,7 +14,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @Component
 public class NpcResolver extends AbstractUserResolver implements HandlerMethodArgumentResolver {
 
-    NpcFactory npcFactory;
+    private NpcFactory npcFactory;
 
     @Autowired
     public NpcResolver(NpcFactory npcFactory){

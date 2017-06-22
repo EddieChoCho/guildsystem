@@ -14,7 +14,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @Component
 public class MemberResolver extends AbstractUserResolver implements HandlerMethodArgumentResolver {
 
-    PlayerFactory playerFactory;
+    private PlayerFactory playerFactory;
 
     @Autowired
     public MemberResolver(PlayerFactory playerFactory){

@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -18,6 +20,7 @@ public class User extends AbstractEntity implements Person{
     private String email;
     @Column(nullable = false)
     private String password;
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     public User(){

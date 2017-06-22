@@ -9,6 +9,8 @@ public class UserBuilder  {
     private String password;
     private Role role;
 
+    public UserBuilder(){
+    }
     public UserBuilder(String name, String email, String password, Role role){
         this.name = name;
         this.email =email;
@@ -36,11 +38,14 @@ public class UserBuilder  {
     }
 
     public User build(){
-        User user = new User();
-        user.setName(name);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setRole(role);
+        User user = new User(name,email,password,role);
+        this.cleanBuilder();
         return user;
+    }
+    private void cleanBuilder(){
+        this.name = null;
+        this.email = null;
+        this.password = null;
+        this.role = null;
     }
 }

@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import javax.transaction.Transactional;
 
 @Transactional
-public interface UserRepository extends JpaRepository<User, Long>{
-    //TODO validator and Exception
-    User findOneByEmail(String email);
+public interface UserRepository extends AbstractUserRepository, JpaRepository<User, Long>{
+
 }

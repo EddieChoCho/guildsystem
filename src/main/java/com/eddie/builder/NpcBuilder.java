@@ -1,6 +1,6 @@
 package com.eddie.builder;
 
-import com.eddie.exception.BasicException;
+import com.eddie.exception.GuildSystemException;
 import com.eddie.model.enums.BasicRole;
 import com.eddie.model.enums.Role;
 import com.eddie.model.interfaces.NPC;
@@ -22,33 +22,21 @@ public class NpcBuilder extends AbstractPersonBuilder{
         this.role = person.getRole();
     }
 
-    public NPC buildNpc() throws BasicException {
+    public NPC buildNpc() throws GuildSystemException {
         roleChecking(this.role.getBasicRole(), BasicRole.NPC);
-        GuildPartner partner = new GuildPartner();
-        partner.setId(this.id);
-        partner.setName(this.name);
-        partner.setEmail(this.email);
-        partner.setRole(this.role);
+        GuildPartner partner = new GuildPartner(id,name,email,role);
         return partner;
     }
 
-    public GuildPartner buildGuildPartner() throws BasicException {
+    public GuildPartner buildGuildPartner() throws GuildSystemException {
         roleChecking(this.role, Role.PARTNER);
-        GuildPartner partner = new GuildPartner();
-        partner.setId(this.id);
-        partner.setName(this.name);
-        partner.setEmail(this.email);
-        partner.setRole(this.role);
+        GuildPartner partner = new GuildPartner(id,name,email,role);
         return partner;
     }
 
-    public GuildManager buildGuildManager() throws BasicException {
+    public GuildManager buildGuildManager() throws GuildSystemException {
         roleChecking(this.role, Role.MANAGER);
-        GuildManager manager = new GuildManager();
-        manager.setId(this.id);
-        manager.setName(this.name);
-        manager.setEmail(this.email);
-        manager.setRole(this.role);
+        GuildManager manager = new GuildManager(id,name,email,role);
         return manager;
     }
 }

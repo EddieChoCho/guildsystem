@@ -1,26 +1,33 @@
 package com.eddie.service.impl;
 
-import com.eddie.exception.AuthException;
-import com.eddie.exception.BasicException;
+import com.eddie.builder.UserBuilder;
+import com.eddie.exception.GuildSystemException;
+import com.eddie.exception.UserException;
 import com.eddie.model.User;
-import com.eddie.repository.UserRepository;
+import com.eddie.model.enums.Role;
+import com.eddie.repository.AbstractUserRepository;
 import com.eddie.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService{
-    @Autowired
-    UserRepository repository;
 
-    @Override
-    public void add(User user) {
-        repository.save(user);
+    AbstractUserRepository repository;
+
+    @Autowired
+    public UserServiceImpl(AbstractUserRepository repository){
+        this.repository = repository;
     }
 
     @Override
-    public void edit(User user) {
-        repository.save(user);
+    public User add(User user) {
+        return repository.save(user);
+    }
+
+    @Override
+    public User edit(User user) {
+        return repository.save(user);
     }
 
     @Override
@@ -34,18 +41,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User findOneByEmail(String email) throws BasicException {
-        User user = repository.findOneByEmail(email);
-        if(user == null){
-            throw new AuthException("user.email.notFound");
-        }
-        return user;
+    public User findOneByEmail(String email) throws GuildSystemException {
+        return repository.findOneByEmail(email);
     }
 
-    @Override
-    public void checkPassword(User user, String passwrod) throws BasicException {
-        if(!user.getPassword().equals(passwrod)){
-            throw new AuthException("auth.password.notCorrect");
-        }
-    }
 }
+
