@@ -8,6 +8,8 @@ A programming play groud where to try and find good coding princeples of clean c
  
 * [Global State and Singletons may not be good ideas.](https://youtu.be/-FRm3VPhseI?list=PL693EFD059797C21E)
 
+* [Great things about Dependency Injection.](https://youtu.be/RlfLCWKxHJ0?list=PL693EFD059797C21E)
+
 
 ### Field Dependency Injection Considered Harmful
 
