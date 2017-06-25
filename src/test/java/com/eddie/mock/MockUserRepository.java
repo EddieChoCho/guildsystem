@@ -51,6 +51,18 @@ public class MockUserRepository implements AbstractUserRepository {
     }
 
     @Override
+    public User findOneByEmailAndPassword(String email, String password) {
+        User result = null;
+        for(User user : userList){
+            if(user.getEmail().equals(email) && user.getPassword().equals(password)){
+                result = user;
+                break;
+            }
+        }
+        return result;
+    }
+
+    @Override
     public void delete(User user) {
         userList.remove(user);
     }
