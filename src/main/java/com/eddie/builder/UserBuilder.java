@@ -39,13 +39,7 @@ public class UserBuilder  {
 
     public User build(){
         User user = new User(name,email,password,role);
-        this.cleanBuilder();
         return user;
     }
-    private void cleanBuilder(){
-        this.name = null;
-        this.email = null;
-        this.password = null;
-        this.role = null;
-    }
+
 }

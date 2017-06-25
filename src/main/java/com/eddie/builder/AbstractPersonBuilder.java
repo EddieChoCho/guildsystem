@@ -12,13 +12,13 @@ public abstract class AbstractPersonBuilder {
 
     public void roleChecking(Role userRole, Role roleShouldBe) throws GuildSystemException {
         if(!userRole.equals(roleShouldBe)){
-            throw new RoleException("You are not a " + roleShouldBe.name() + "!");
+            throw new RoleException("accessDenied.roleNotFit." + roleShouldBe.name());
         }
     }
 
     public void roleChecking(BasicRole userRole, BasicRole roleShouldBe) throws GuildSystemException {
         if(!userRole.equals(roleShouldBe)){
-            throw new RoleException("You are not a " + roleShouldBe.name() + "!");
+            throw new RoleException("accessDenied.roleNotFit." + roleShouldBe.name() );
         }
     }
 }
