@@ -16,10 +16,14 @@ A spring boot rest service porject. Treated as a programming play groud where to
 
 
 
-
 #### Field Dependency Injection Considered Harmful
 
 * http://vojtechruzicka.com/field-dependency-injection-considered-harmful/
+
+#### Unit Testing Best Practices with Roy Osherove
+
+* https://youtu.be/dJUVNFxrK_4
+
 
 ## Current Progress:
 #### 1. Restful API for user model:
