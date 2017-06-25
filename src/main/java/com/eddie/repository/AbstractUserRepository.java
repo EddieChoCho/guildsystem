@@ -9,6 +9,8 @@ public interface AbstractUserRepository {
 
     User findOneByEmail(String email);
 
+    User findOneByEmailAndPassword(String email,String password);
+
     void delete(User user);
 
 }

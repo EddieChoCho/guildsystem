@@ -17,32 +17,26 @@ public class AuthServiceImpl implements AuthService{
 
     private AbstractUserRepository repository;
 
-    private UserBuilder builder;
-
     @Autowired
-    public AuthServiceImpl(AbstractUserRepository repository, UserBuilder builder){
+    public AuthServiceImpl(AbstractUserRepository repository){
         this.repository = repository;
-        this.builder = builder;
     }
 
     @Override
     public void login(HttpSession session, String email, String password) throws GuildSystemException {
-        User user = repository.findOneByEmail(email);
-        this.checkUser(user);
-        this.checkPasswordIsCorrect(user.getPassword(), password);
+        User user = repository.findOneByEmailAndPassword(email,password);
+        if(user == null){
+            this.loginValidation(email, password);
+        }
         this.login(session, user);
     }
 
-    private void checkUser(User user) throws AuthException {
-        if(user == null){
-            throw new AuthException("");
-        }
+    private boolean checkUser(User user) throws AuthException {
+        return user != null;
     }
 
-    private void checkPasswordIsCorrect(String password, String input) throws AuthException {
-        if(!password.equals(input)){
-            throw new AuthException("");
-        }
+    private boolean checkPasswordIsCorrect(String password, String input) throws AuthException {
+        return password.equals(input);
     }
 
     private void login(HttpSession session, User user) {
@@ -54,16 +48,32 @@ public class AuthServiceImpl implements AuthService{
     }
 
     public void register(String name, String email, String password, String confirm, Role role) throws GuildSystemException {
-        this.checkEmail(email);
-        this.checkPasswordIsCorrect(password, confirm);
-        User user = builder.setEmail(name).setEmail(email).setPassword(password).setRole(role).build();
+        this.registrationValidation(email, password, confirm);
+        User user = new UserBuilder().setName(name).setEmail(email).setPassword(password).setRole(role).build();
         repository.save(user);
     }
 
-    private void checkEmail(String email) throws GuildSystemException {
+    private boolean checkEmailHasNotBeenUsed(String email) throws GuildSystemException {
         User user = repository.findOneByEmail(email);
-        if(user != null){
-            throw new AuthException("user.email.hasBeenUsed");
+        return user == null;
+    }
+
+    private void registrationValidation(String email, String password, String confirm) throws GuildSystemException {
+        if(!this.checkEmailHasNotBeenUsed(email)){
+            throw new AuthException("auth.register.email.hasBeenUsed");
+        }
+        if(!this.checkPasswordIsCorrect(password, confirm)){
+            throw new AuthException("auth.register.password.notConfirmed");
+        }
+    }
+
+    private void loginValidation(String email, String password) throws GuildSystemException {
+        User user = repository.findOneByEmail(email);
+        if(!this.checkUser(user)){
+            throw new AuthException("auth.login.email.hasNotBeenRegistered");
+        }
+        if(!this.checkPasswordIsCorrect(user.getPassword(), password)){
+            throw new AuthException("auth.login.password.isNotCorrect");
         }
     }
 }
