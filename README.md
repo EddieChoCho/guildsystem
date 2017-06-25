@@ -22,7 +22,7 @@ A programming play groud where to try and find good coding princeples of clean c
 * http://vojtechruzicka.com/field-dependency-injection-considered-harmful/
 
 ## Current Progress:
-#### 1.Restful API for user model:
+#### 1. Restful API for user model:
  * 1-1. Using HandlerMethodArgumentResolver for getting user data.
  * 1-2. Using Inheritance for role control. Comparing with AOP, it has better maintainability and testability.
  
