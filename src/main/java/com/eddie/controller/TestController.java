@@ -4,21 +4,24 @@ import com.eddie.model.User;
 import com.eddie.model.interfaces.NPC;
 import com.eddie.model.interfaces.Player;
 import com.eddie.model.pojo.Member;
+import com.eddie.response.GuildSystemExceptionResponse;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/rest/test/")
-public class TestController {
+public class TestController extends AbstractExceptionHandleController{
 
     private ObjectMapper mapper;
 
     @Autowired
-    public TestController(ObjectMapper mapper){
+    public TestController(ObjectMapper mapper, GuildSystemExceptionResponse exceptionResponse){
+        super(exceptionResponse);
         this.mapper = mapper;
     }
     @GetMapping("me/")

@@ -1,9 +1,9 @@
 package com.eddie.config;
 
-import com.eddie.resolver.MemberResolver;
-import com.eddie.resolver.NpcResolver;
-import com.eddie.resolver.PlayerResolver;
-import com.eddie.resolver.UserResolver;
+import com.eddie.resolver.arguments.MemberResolver;
+import com.eddie.resolver.arguments.NpcResolver;
+import com.eddie.resolver.arguments.PlayerResolver;
+import com.eddie.resolver.arguments.UserResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
