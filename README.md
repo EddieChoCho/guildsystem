@@ -10,6 +10,12 @@ A programming play groud where to try and find good coding princeples of clean c
 
 * [Great things about Dependency Injection.](https://youtu.be/RlfLCWKxHJ0?list=PL693EFD059797C21E)
 
+* [Writing testable codes.](https://youtu.be/RlfLCWKxHJ0?list=PL693EFD059797C21E)
+
+* [OO Design for Testability.](https://youtu.be/acjvKJiOvXw?list=PL693EFD059797C21E)
+
+
+
 
 ### Field Dependency Injection Considered Harmful
 
