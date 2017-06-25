@@ -22,13 +22,13 @@ A programming play groud where to try and find good coding princeples of clean c
 * http://vojtechruzicka.com/field-dependency-injection-considered-harmful/
 
 ## Current Progress:
-1.Restful API for user model:
+#### 1.Restful API for user model:
  * 1-1. Using HandlerMethodArgumentResolver for getting user data.
  * 1-2. Using Inheritance for role control. Comparing with AOP, it has better maintainability and testability.
-  
-2. International message handling, exception handling.
+ 
+#### 2. International message handling, exception handling.
 
-3. Used/Will used design patterns:
+#### 3. Used/Will used design patterns:
  * 3-1. Factory Method Pattern
  * 3-2. Builder Pattern
  * 3-3. Composite Pattern
