@@ -1,8 +1,8 @@
-package com.eddie.resolver;
+package com.eddie.resolver.arguments;
 
 import com.eddie.factory.PlayerFactory;
 import com.eddie.model.User;
-import com.eddie.model.pojo.Member;
+import com.eddie.model.interfaces.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -12,23 +12,23 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Component
-public class MemberResolver extends AbstractUserResolver implements HandlerMethodArgumentResolver {
+public class PlayerResolver extends AbstractUserResolver implements HandlerMethodArgumentResolver {
 
     private PlayerFactory playerFactory;
 
     @Autowired
-    public MemberResolver(PlayerFactory playerFactory){
+    public PlayerResolver(PlayerFactory playerFactory){
         this.playerFactory = playerFactory;
     }
 
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
-        return methodParameter.getParameterType().equals(Member.class);
+        return methodParameter.getParameterType().equals(Player.class);
     }
 
     @Override
-    public Member resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
+    public Player resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
         User user = this.getUserFromSession(nativeWebRequest);
-        return playerFactory.provideMember(user);
+        return playerFactory.providePlayer(user);
     }
 }

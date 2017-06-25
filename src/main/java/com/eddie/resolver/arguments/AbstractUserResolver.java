@@ -1,4 +1,4 @@
-package com.eddie.resolver;
+package com.eddie.resolver.arguments;
 
 import com.eddie.exception.AuthException;
 import com.eddie.exception.GuildSystemException;

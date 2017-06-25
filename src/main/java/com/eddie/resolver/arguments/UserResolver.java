@@ -1,6 +1,5 @@
-package com.eddie.resolver;
+package com.eddie.resolver.arguments;
 
-import com.eddie.exception.AuthException;
 import com.eddie.model.User;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;

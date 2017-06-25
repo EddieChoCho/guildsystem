@@ -1,4 +1,4 @@
-package com.eddie.resolver;
+package com.eddie.resolver.arguments;
 
 import com.eddie.factory.NpcFactory;
 import com.eddie.model.User;
