@@ -1,10 +1,7 @@
 package com.eddie.service.impl;
 
-import com.eddie.builder.UserBuilder;
 import com.eddie.exception.GuildSystemException;
-import com.eddie.exception.UserException;
 import com.eddie.model.User;
-import com.eddie.model.enums.Role;
 import com.eddie.repository.AbstractUserRepository;
 import com.eddie.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,7 @@
-package com.eddie.response;
+package com.eddie.response.impl;
 
 import com.eddie.exception.GuildSystemException;
+import com.eddie.response.ExceptionResponse;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Locale;
 
 @Component
-public class GuildSystemExceptionResponse {
+public class GuildSystemExceptionResponse implements ExceptionResponse<GuildSystemException> {
 
     private MessageSource messageSource;
 

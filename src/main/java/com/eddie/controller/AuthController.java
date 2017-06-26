@@ -2,7 +2,7 @@ package com.eddie.controller;
 
 import com.eddie.exception.GuildSystemException;
 import com.eddie.model.enums.Role;
-import com.eddie.response.GuildSystemExceptionResponse;
+import com.eddie.response.impl.GuildSystemExceptionResponse;
 import com.eddie.service.AuthService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
