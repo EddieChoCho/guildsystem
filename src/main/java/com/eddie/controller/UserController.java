@@ -15,9 +15,6 @@ import java.util.List;
 @RequestMapping("/rest/users/")
 public class UserController extends AbstractExceptionHandleController{
 
-    @Autowired
-    private UserRepository repository;
-
     private UserService userService;
 
     private DataResponse<User> userResponse;
@@ -34,12 +31,5 @@ public class UserController extends AbstractExceptionHandleController{
     public JsonNode checkUserInfo(User user){
         return userResponse.packResponse(user);
     }
-
-    @GetMapping("me/all")
-    public JsonNode checkAllUserInfo(User user){
-        List<User> userList = repository.findAll();
-        return userResponse.packResponse(userList);
-    }
-
 
 }
