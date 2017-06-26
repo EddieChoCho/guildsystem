@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-public abstract class Team extends AbstractEntity {
+public class Team extends AbstractEntity {
 
     @NotNull
     @Column(name="name", nullable = false)
@@ -23,6 +23,17 @@ public abstract class Team extends AbstractEntity {
 
     @OneToMany
     private List<User> members;
+
+    public Team(){
+
+    }
+
+    public Team(String name, TeamType type, User leader, List<User> members){
+        this.name = name;
+        this.type = type;
+        this.leader = leader;
+        this.members = members;
+    }
 
     public String getName() {
         return name;

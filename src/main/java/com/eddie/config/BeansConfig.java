@@ -2,6 +2,7 @@ package com.eddie.config;
 
 import com.eddie.factory.NpcFactory;
 import com.eddie.factory.PlayerFactory;
+import com.eddie.model.Team;
 import com.eddie.model.User;
 import com.eddie.response.impl.DataResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,6 +30,11 @@ public class BeansConfig {
     @Bean
     public DataResponse<User> userResponse(){
         return new DataResponse<User>(mapper());
+    }
+
+    @Bean
+    public DataResponse<Team> teamResponse(){
+        return new DataResponse<Team>(mapper());
     }
 
 
