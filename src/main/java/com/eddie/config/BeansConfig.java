@@ -1,16 +1,15 @@
 package com.eddie.config;
 
-import com.eddie.builder.UserBuilder;
 import com.eddie.factory.NpcFactory;
 import com.eddie.factory.PlayerFactory;
+import com.eddie.model.User;
+import com.eddie.response.impl.DataResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ResourceBundleMessageSource;
 
 @Configuration
-public class RestConfig {
+public class BeansConfig {
 
     @Bean
     public ObjectMapper mapper(){
@@ -28,10 +27,9 @@ public class RestConfig {
     }
 
     @Bean
-    public MessageSource messageSource(){
-        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasenames("i18n/ExceptionMessages");
-        messageSource.setDefaultEncoding("UTF-8");
-        return messageSource;
+    public DataResponse<User> userResponse(){
+        return new DataResponse<User>(mapper());
     }
+
+
 }
