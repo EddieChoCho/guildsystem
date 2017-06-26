@@ -36,6 +36,6 @@ A spring boot rest service porject. Treated as a programming play groud where to
  * 3-1. Factory Method Pattern
  * 3-2. Builder Pattern
  * 3-3. Composite Pattern
- * 3-4. Strategy Pattern
+ * 3-4. Strategy Pattern (Using polymorphism and generics)
  
  #### 4. Unit testing
