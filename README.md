@@ -29,7 +29,7 @@ A spring boot rest service porject. Treated as a programming play groud where to
 #### 1. Restful API for user model:
  * 1-1. Using HandlerMethodArgumentResolver for getting user data.
  * 1-2. Using Inheritance for role control. Comparing with AOP, it has better maintainability and testability.
- * 1-3. Strategy Pattern for different team creation controllers. Write once, works differently.
+ * 1-3. Strategy Pattern for different team creation controllers. Write once, work differently.
  
 #### 2. Internationalized message handling, exception response handling.
 
