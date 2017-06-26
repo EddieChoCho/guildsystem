@@ -39,6 +39,17 @@ public class MockUserRepository implements AbstractUserRepository {
     }
 
     @Override
+    public List<User> findAllByIdIn(List<Long> id) {
+        List<User> result = new ArrayList<>();
+        for(User user : userList){
+            if(user.getId().equals(id)){
+                result.add(user);
+            }
+        }
+        return result;
+    }
+
+    @Override
     public User findOneByEmail(String email) {
         User result = null;
         for(User user : userList){
