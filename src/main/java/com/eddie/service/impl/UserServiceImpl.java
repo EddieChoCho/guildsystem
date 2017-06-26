@@ -7,6 +7,8 @@ import com.eddie.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService{
 
@@ -40,6 +42,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public User findOneByEmail(String email) throws GuildSystemException {
         return repository.findOneByEmail(email);
+    }
+
+    @Override
+    public List<User> findAllByIdIn(List<Long> idList) {
+        return repository.findAllByIdIn(idList);
     }
 
 }
