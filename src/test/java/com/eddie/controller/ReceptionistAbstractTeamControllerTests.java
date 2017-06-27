@@ -1,6 +1,6 @@
 package com.eddie.controller;
 
-import com.eddie.builder.PlayerBuilder;
+import com.eddie.builder.NpcBuilder;
 import com.eddie.exception.GuildSystemException;
 import com.eddie.mock.MockAbstractTeamRepository;
 import com.eddie.mock.MockUserRepository;
@@ -8,11 +8,11 @@ import com.eddie.model.Team;
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;
 import com.eddie.model.enums.TeamType;
-import com.eddie.model.pojo.Leader;
+import com.eddie.model.pojo.GuildManager;
 import com.eddie.repository.AbstractTeamRepository;
 import com.eddie.repository.AbstractUserRepository;
 import com.eddie.response.impl.DataResponse;
-import com.eddie.service.impl.AdventureTeamServiceImpl;
+import com.eddie.service.impl.ReceptionistTeamServiceImpl;
 import com.eddie.service.impl.UserServiceImpl;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,12 +25,11 @@ import java.util.Arrays;
 /**
  * Created by EddieChoCho on 2017/6/27.
  */
-public class AdventureTeamControllerTests {
+public class ReceptionistAbstractTeamControllerTests {
+    private ReceptionistAbstractTeamController controller;
 
-    private AdventureAbstractTeamController controller;
-
-    private Leader leader;
-    private User member;
+    private GuildManager manager;
+    private User partner;
 
     @Before
     public void setUp() throws GuildSystemException {
@@ -39,20 +38,20 @@ public class AdventureTeamControllerTests {
         UserServiceImpl userService = new UserServiceImpl(userRepository);
         ObjectMapper mapper = new ObjectMapper();
         DataResponse<Team> response = new DataResponse<Team>(mapper);
-        AdventureTeamServiceImpl teamService = new AdventureTeamServiceImpl(teamRepository);
-        controller = new AdventureAbstractTeamController(teamService, userService, response);
-        User user = new User("leader", "leader@email", "password", Role.LEADER);
-        leader = new PlayerBuilder(user).buildLeader();
-        member = new User("member", "member@email", "password", Role.MEMBER);
-        userService.add(leader);
-        userService.add(member);
+        ReceptionistTeamServiceImpl teamService = new ReceptionistTeamServiceImpl(teamRepository);
+        controller = new ReceptionistAbstractTeamController(teamService, userService, response);
+        User user = new User("manager", "manager@email", "password", Role.MANAGER);
+        manager = new NpcBuilder(user).buildGuildManager();
+        partner = new User("partner", "partner@email", "password", Role.PARTNER);
+        userService.add(manager);
+        userService.add(partner);
     }
 
     @Test
     public void testCreateTeam() {
         JsonNode node = null;
         try {
-            node = controller.createTeam(leader, "team", Arrays.asList(member.getId()));
+            node = controller.createTeam(manager, "team", Arrays.asList(partner.getId()));
         } catch (GuildSystemException e) {
             e.printStackTrace();
         }
@@ -63,17 +62,16 @@ public class AdventureTeamControllerTests {
     public void testFindTeamLeadedByUser() throws IOException {
         JsonNode node = null;
         try {
-            controller.createTeam(leader, "team", Arrays.asList(member.getId()));
-            node = controller.findTeamLeadedByUser(leader);
+            controller.createTeam(manager, "team", Arrays.asList(partner.getId()));
+            node = controller.findTeamLeadedByUser(manager);
         } catch (GuildSystemException e) {
             e.printStackTrace();
         }
         ObjectMapper mapper = new ObjectMapper();
         Team team = mapper.readValue(node.get("data").toString(), Team.class);
         assert (team.getName().equals("team"));
-        assert (team.getLeader().getId().equals(leader.getId()));
-        assert (team.getMembers().get(0).getId().equals(member.getId()));
-        assert (team.getType().equals(TeamType.ADVENTURE));
+        assert (team.getLeader().getId().equals(manager.getId()));
+        assert (team.getMembers().get(0).getId().equals(partner.getId()));
+        assert (team.getType().equals(TeamType.RECEPTIONIST));
     }
-
 }
