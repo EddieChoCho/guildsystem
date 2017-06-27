@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/rest/test/")
-public class TestController extends AbstractExceptionHandleController{
+public class TestController {
 
     private ObjectMapper mapper;
 
     @Autowired
-    public TestController(ObjectMapper mapper, GuildSystemExceptionResponse exceptionResponse){
-        super(exceptionResponse);
+    public TestController(ObjectMapper mapper){
         this.mapper = mapper;
     }
     @GetMapping("me/")

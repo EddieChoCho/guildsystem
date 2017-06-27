@@ -13,15 +13,14 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/rest/auth/")
-public class AuthController extends AbstractExceptionHandleController{
+public class AuthController {
 
     private AuthService authService;
 
     private ObjectMapper mapper;
 
     @Autowired
-    public AuthController(AuthService authService, ObjectMapper mapper, GuildSystemExceptionResponse response) {
-        super(response);
+    public AuthController(AuthService authService, ObjectMapper mapper) {
         this.authService = authService;
         this.mapper = mapper;
     }

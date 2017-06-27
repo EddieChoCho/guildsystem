@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/rest/adventure/")
-public class AdventureTeamController extends AbstractTeamController<Leader>{
+public class AdventureTeamController extends TeamController<Leader>{
 
     @Autowired
-    public AdventureTeamController(AdventureTeamServiceImpl teamService, UserService userService, DataResponse<Team> teamResponse, GuildSystemExceptionResponse exceptionResponse){
-        super(teamService, userService, teamResponse, exceptionResponse);
+    public AdventureTeamController(AdventureTeamServiceImpl teamService, UserService userService, DataResponse<Team> teamResponse){
+        super(teamService, userService, teamResponse);
     }
 }

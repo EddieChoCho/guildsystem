@@ -3,21 +3,18 @@ package com.eddie.controller;
 import com.eddie.exception.GuildSystemException;
 import com.eddie.model.Team;
 import com.eddie.model.User;
-import com.eddie.model.interfaces.Person;
 import com.eddie.response.impl.DataResponse;
 import com.eddie.response.impl.GuildSystemExceptionResponse;
 import com.eddie.service.TeamService;
 import com.eddie.service.UserService;
-import com.eddie.service.impl.ReceptionistTeamServiceImpl;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-public abstract class AbstractTeamController<T extends User> extends AbstractExceptionHandleController{
+public abstract class TeamController<T extends User>{
 
     private TeamService teamService;
 
@@ -25,8 +22,7 @@ public abstract class AbstractTeamController<T extends User> extends AbstractExc
 
     private DataResponse<Team> teamResponse;
 
-    public AbstractTeamController(TeamService teamService, UserService userService, DataResponse<Team> teamResponse, GuildSystemExceptionResponse response) {
-        super(response);
+    public TeamController(TeamService teamService, UserService userService, DataResponse<Team> teamResponse) {
         this.teamService = teamService;
         this.userService = userService;
         this.teamResponse = teamResponse;

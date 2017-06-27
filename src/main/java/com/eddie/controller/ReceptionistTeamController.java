@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/rest/receptionist/")
-public class ReceptionistTeamController extends AbstractTeamController<GuildManager>{
+public class ReceptionistTeamController extends TeamController<GuildManager>{
 
     @Autowired
-    public ReceptionistTeamController(ReceptionistTeamServiceImpl teamService, UserService userService, DataResponse<Team> teamResponse, GuildSystemExceptionResponse exceptionResponse){
-        super(teamService, userService, teamResponse, exceptionResponse);
+    public ReceptionistTeamController(ReceptionistTeamServiceImpl teamService, UserService userService, DataResponse<Team> teamResponse){
+        super(teamService, userService, teamResponse);
     }
 
 }
