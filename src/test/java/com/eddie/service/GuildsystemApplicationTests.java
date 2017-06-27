@@ -1,4 +1,4 @@
-package com.eddie;
+package com.eddie.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

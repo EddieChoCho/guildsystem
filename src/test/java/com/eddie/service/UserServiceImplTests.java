@@ -1,4 +1,4 @@
-package com.eddie;
+package com.eddie.service;
 
 import com.eddie.builder.UserBuilder;
 import com.eddie.mock.MockUserRepository;
@@ -6,35 +6,35 @@ import com.eddie.model.User;
 import com.eddie.model.enums.Role;
 import com.eddie.service.UserService;
 import com.eddie.service.impl.UserServiceImpl;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-public class UserServiceTests {
+@SpringBootTest
+public class UserServiceImplTests {
 
     private UserService userService;
 
-    private MockUserRepository repository;
+    private User newUser;
 
-    private UserBuilder builder;
-
-    public UserServiceTests(){
-        repository = new MockUserRepository();
+    @Before
+    public void setUp(){
+        MockUserRepository repository = new MockUserRepository();
         userService = new UserServiceImpl(repository);
-        builder = new UserBuilder();
+        newUser = new UserBuilder().setName("Gandalf").setEmail("gandalf@mail").setPassword("weShouldCallSomeEagles").setRole(Role.LEADER).build();
     }
 
     @Test
     public void testAddUser() throws Exception {
-        User newUser = builder.setName("Gandalf").setEmail("gandalf@mail").setPassword("weShouldCallSomeEagles").setRole(Role.LEADER).build();
         User  user = userService.add(newUser);
         assert(user.equals(newUser));
     }
 
     @Test
     public void testEditUser() throws Exception {
-        User newUser = builder.setName("Gandalf").setEmail("gandalf@mail").setPassword("weShouldCallSomeEagles").setRole(Role.LEADER).build();
         userService.add(newUser);
         newUser.setPassword("youShouldNotPass!!!!");
         User  user = userService.edit(newUser);
@@ -43,7 +43,6 @@ public class UserServiceTests {
 
     @Test
     public void testFindById() throws Exception {
-        User newUser = builder.setName("Gandalf").setEmail("gandalf@mail").setPassword("weShouldCallSomeEagles").setRole(Role.LEADER).build();
         newUser = userService.add(newUser);
         User  user = userService.findById(newUser.getId());
         assert(user.equals(newUser));
@@ -51,7 +50,6 @@ public class UserServiceTests {
 
     @Test
     public void testFindOneByEmail() throws Exception {
-        User newUser = builder.setName("Gandalf").setEmail("gandalf@mail").setPassword("weShouldCallSomeEagles").setRole(Role.LEADER).build();
         userService.add(newUser);
         User  user = userService.findOneByEmail("gandalf@mail");
         assert(user.equals(newUser));
@@ -59,7 +57,6 @@ public class UserServiceTests {
 
     @Test
     public void testDelete() throws Exception {
-        User newUser = builder.setName("Gandalf").setEmail("gandalf@mail").setPassword("weShouldCallSomeEagles").setRole(Role.LEADER).build();
         userService.add(newUser);
         userService.delete(newUser);
         User  user = userService.findById(newUser.getId());

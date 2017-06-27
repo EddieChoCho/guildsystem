@@ -8,20 +8,17 @@ import java.util.List;
 
 public class MockUserRepository implements AbstractUserRepository {
 
-    private final Long id;
-    private Long counter = new Long(0);
+    private Long id = new Long(0);
     private List<User> userList;
 
     public MockUserRepository(){
-        id = counter;
         userList = new ArrayList<>();
     }
 
     @Override
     public User save(User user) {
-        counter++;
+        id++;
         user.setId(id);
-        userList.remove(user);
         userList.add(user);
         return user;
     }
@@ -39,11 +36,13 @@ public class MockUserRepository implements AbstractUserRepository {
     }
 
     @Override
-    public List<User> findAllByIdIn(List<Long> id) {
+    public List<User> findAllByIdIn(List<Long> ids) {
         List<User> result = new ArrayList<>();
         for(User user : userList){
-            if(user.getId().equals(id)){
-                result.add(user);
+            for(Long id : ids){
+                if(user.getId().equals(id)){
+                    result.add(user);
+                }
             }
         }
         return result;
