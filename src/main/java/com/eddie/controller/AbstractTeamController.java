@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-public abstract class TeamController<T extends User>{
+public abstract class AbstractTeamController<T extends User>{
 
     private TeamService teamService;
 
@@ -22,7 +22,7 @@ public abstract class TeamController<T extends User>{
 
     private DataResponse<Team> teamResponse;
 
-    public TeamController(TeamService teamService, UserService userService, DataResponse<Team> teamResponse) {
+    public AbstractTeamController(TeamService teamService, UserService userService, DataResponse<Team> teamResponse) {
         this.teamService = teamService;
         this.userService = userService;
         this.teamResponse = teamResponse;
@@ -36,7 +36,7 @@ public abstract class TeamController<T extends User>{
     }
 
     @GetMapping("teams")
-    public JsonNode findTeamLeadedByUser(T user) throws GuildSystemException {
+    public JsonNode findTeamLeadedByUser(User user) throws GuildSystemException {
         Team team = teamService.findOneByLeader(user);
         return teamResponse.packResponse(team);
     }
