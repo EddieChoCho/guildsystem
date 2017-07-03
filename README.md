@@ -20,9 +20,12 @@ A spring boot rest service porject. Treated as a programming play groud where to
 
 * http://vojtechruzicka.com/field-dependency-injection-considered-harmful/
 
-#### Unit Testing Best Practices with Roy Osherove
+#### Talks about Unit Testing by Roy Osherove
 
-* https://youtu.be/dJUVNFxrK_4
+* [Unit Testing Best Practices](https://youtu.be/dJUVNFxrK_4)
+
+* [The Difference between Mock and Stub](https://youtu.be/fAb_OnooCsQ)
+
 
 
 ## Current Progress:
