@@ -9,7 +9,6 @@ import com.eddie.model.User;
 import com.eddie.model.enums.Role;
 import com.eddie.model.enums.TeamType;
 import com.eddie.model.pojo.GuildManager;
-import com.eddie.repository.AbstractTeamRepository;
 import com.eddie.repository.AbstractUserRepository;
 import com.eddie.response.impl.DataResponse;
 import com.eddie.service.impl.ReceptionistTeamServiceImpl;
@@ -37,7 +36,7 @@ public class ReceptionistAbstractTeamControllerTests {
         mockRepository = new FakeAbstractTeamRepository();
         UserServiceImpl userService = new UserServiceImpl(userRepository);
         ObjectMapper mapper = new ObjectMapper();
-        DataResponse<Team> response = new DataResponse<Team>(mapper);
+        DataResponse<Team> response = new DataResponse<>(mapper);
         ReceptionistTeamServiceImpl teamService = new ReceptionistTeamServiceImpl(mockRepository);
         controller = new ReceptionistAbstractTeamController(teamService, userService, response);
         User user = new User("manager", "manager@email", "password", Role.MANAGER);
@@ -49,9 +48,8 @@ public class ReceptionistAbstractTeamControllerTests {
 
     @Test
     public void testCreateTeam() {
-        JsonNode node = null;
         try {
-            node = controller.createTeam(manager, "team", Arrays.asList(partner.getId()));
+            controller.createTeam(manager, "team", Arrays.asList(partner.getId()));
         } catch (GuildSystemException e) {
             e.printStackTrace();
         }
@@ -73,6 +71,7 @@ public class ReceptionistAbstractTeamControllerTests {
             e.printStackTrace();
         }
         ObjectMapper mapper = new ObjectMapper();
+        assert node != null;
         Team team = mapper.readValue(node.get("data").toString(), Team.class);
         assert (team.getName().equals(newTeam.getName()));
         assert (team.getLeader().getId().equals(newTeam.getLeader().getId()));
