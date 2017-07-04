@@ -1,7 +1,7 @@
 package com.eddie.mock.test;
 
 import com.eddie.builder.UserBuilder;
-import com.eddie.mock.MockUserRepository;
+import com.eddie.mock.FakeUserRepository;
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;
 import org.junit.Before;
@@ -14,15 +14,15 @@ import java.util.List;
 /**
  * Created by EddieChoCho on 2017/6/28.
  */
-public class MockUserRepositoryTests {
+public class FakeUserRepositoryTests {
 
-    private MockUserRepository repository;
+    private FakeUserRepository repository;
 
-    private User newUser;
+    public User newUser;
 
     @Before
     public void setUp(){
-        repository = new MockUserRepository();
+        repository = new FakeUserRepository();
         newUser = new UserBuilder().setName("Gandalf").setEmail("gandalf@mail").setPassword("weShouldCallSomeEagles").setRole(Role.LEADER).build();
     }
 
@@ -34,14 +34,16 @@ public class MockUserRepositoryTests {
 
     @Test
     public void testFindOne(){
-        repository.save(newUser);
+        newUser.setId(1L);
+        repository.userList.add(newUser);
         User user = repository.findOne(1L);
         assert (user.equals(newUser));
     }
 
     @Test
     public void testFindAllByIdIn(){
-        repository.save(newUser);
+        newUser.setId(1L);
+        repository.userList.addAll(Arrays.asList(newUser));
         List<Long> idList = new ArrayList<>(Arrays.asList(1L));
         List<User> users = repository.findAllByIdIn(idList);
         assert (users.size() == idList.size());
@@ -49,23 +51,22 @@ public class MockUserRepositoryTests {
 
     @Test
     public void testFindOneByEmail(){
-        repository.save(newUser);
+        repository.userList.add(newUser);
         User user = repository.findOneByEmail(newUser.getEmail());
         assert (user.equals(newUser));
     }
 
     @Test
     public void testFindOneByEmailAndPassword(){
-        repository.save(newUser);
+        repository.userList.add(newUser);
         User user = repository.findOneByEmailAndPassword(newUser.getEmail(), newUser.getPassword());
         assert (user.equals(newUser));
     }
 
     @Test
     public void testDelete(){
-        repository.save(newUser);
+        repository.userList.add(newUser);
         repository.delete(newUser);
-        User user = repository.findOneByEmail(newUser.getEmail());
-        assert (user == null);
+        assert (!repository.userList.contains(newUser));
     }
 }

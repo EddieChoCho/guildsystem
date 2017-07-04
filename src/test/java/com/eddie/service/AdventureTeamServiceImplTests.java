@@ -1,6 +1,6 @@
 package com.eddie.service;
 
-import com.eddie.mock.MockAbstractTeamRepository;
+import com.eddie.mock.FakeAbstractTeamRepository;
 import com.eddie.model.Team;
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;
@@ -19,19 +19,18 @@ import java.util.List;
 /**
  * Created by EddieChoCho on 2017/6/27.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class AdventureTeamServiceImplTests {
 
     private AdventureTeamServiceImpl service;
+    private FakeAbstractTeamRepository mockRepository;
     private Team team;
     private User leader;
     private User member;
 
     @Before
     public void setUp(){
-        AbstractTeamRepository repository = new MockAbstractTeamRepository();
-        service = new AdventureTeamServiceImpl(repository);
+        mockRepository = new FakeAbstractTeamRepository();
+        service = new AdventureTeamServiceImpl(mockRepository);
         team = new Team();
         leader = new User("leader","leader@email","password", Role.LEADER);
         member = new User("member","member@email","password", Role.MEMBER);
@@ -44,42 +43,41 @@ public class AdventureTeamServiceImplTests {
     @Test
     public void testAdd(){
         Team result = service.add(team);
-        assert (result.equals(team));
+        assert (mockRepository.teamList.contains(team));
     }
 
     @Test
     public void testEdit(){
-        Team result = service.add(team);
+        mockRepository.save(team);
         team.setName("editTeam");
-        result = service.edit(team);
+        Team result = service.edit(team);
         assert (result.getName().equals("editTeam"));
     }
 
     @Test
     public void testFindById(){
-        team = service.add(team);
+        mockRepository.save(team);
         Team result = service.findById(team.getId());
         assert (result.equals(team));
     }
 
     @Test
     public void testDelete(){
-        team = service.add(team);
+        mockRepository.save(team);
         service.delete(team);
-        Team result = service.findById(team.getId());
-        assert (result == null);
+        assert (!mockRepository.teamList.contains(team));
     }
 
     @Test
     public void testFindOneByLeader(){
-        team = service.add(team);
+        mockRepository.save(team);
         Team result = service.findOneByLeader(leader);
         assert (result.equals(team));
     }
 
     @Test
     public void testFindAllByType(){
-        team = service.add(team);
+        mockRepository.save(team);
         List<Team> result = service.findAllByType(TeamType.ADVENTURE);
         for(Team eachTeam : result){
             assert (eachTeam.getType().equals(TeamType.ADVENTURE));

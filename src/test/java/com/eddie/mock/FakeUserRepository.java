@@ -6,12 +6,12 @@ import com.eddie.repository.AbstractUserRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MockUserRepository implements AbstractUserRepository {
+public class FakeUserRepository implements AbstractUserRepository {
 
     private Long id = new Long(0);
-    private List<User> userList;
+    public List<User> userList;
 
-    public MockUserRepository(){
+    public FakeUserRepository(){
         userList = new ArrayList<>();
     }
 

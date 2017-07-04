@@ -2,8 +2,8 @@ package com.eddie.controller;
 
 import com.eddie.builder.NpcBuilder;
 import com.eddie.exception.GuildSystemException;
-import com.eddie.mock.MockAbstractTeamRepository;
-import com.eddie.mock.MockUserRepository;
+import com.eddie.mock.FakeAbstractTeamRepository;
+import com.eddie.mock.FakeUserRepository;
 import com.eddie.model.Team;
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;
@@ -27,18 +27,18 @@ import java.util.Arrays;
  */
 public class ReceptionistAbstractTeamControllerTests {
     private ReceptionistAbstractTeamController controller;
-
+    private FakeAbstractTeamRepository mockRepository;
     private GuildManager manager;
     private User partner;
 
     @Before
     public void setUp() throws GuildSystemException {
-        AbstractUserRepository userRepository = new MockUserRepository();
-        AbstractTeamRepository teamRepository = new MockAbstractTeamRepository();
+        AbstractUserRepository userRepository = new FakeUserRepository();
+        mockRepository = new FakeAbstractTeamRepository();
         UserServiceImpl userService = new UserServiceImpl(userRepository);
         ObjectMapper mapper = new ObjectMapper();
         DataResponse<Team> response = new DataResponse<Team>(mapper);
-        ReceptionistTeamServiceImpl teamService = new ReceptionistTeamServiceImpl(teamRepository);
+        ReceptionistTeamServiceImpl teamService = new ReceptionistTeamServiceImpl(mockRepository);
         controller = new ReceptionistAbstractTeamController(teamService, userService, response);
         User user = new User("manager", "manager@email", "password", Role.MANAGER);
         manager = new NpcBuilder(user).buildGuildManager();
@@ -55,23 +55,36 @@ public class ReceptionistAbstractTeamControllerTests {
         } catch (GuildSystemException e) {
             e.printStackTrace();
         }
-        assert (node.get("msg").textValue().equals("success"));
+        Team teem =mockRepository.teamList.get(0);
+        assert (teem.getLeader().equals(manager));
+        assert (teem.getName().equals("team"));
+        assert (teem.getMembers().contains(partner));
+        assert (teem.getType().equals(TeamType.RECEPTIONIST));
     }
 
     @Test
     public void testFindTeamLeadedByUser() throws IOException {
         JsonNode node = null;
+        Team newTeam = new Team("team",TeamType.RECEPTIONIST,manager,Arrays.asList(partner));
+        mockRepository.teamList.add(newTeam);
         try {
-            controller.createTeam(manager, "team", Arrays.asList(partner.getId()));
             node = controller.findTeamLeadedByUser(manager);
         } catch (GuildSystemException e) {
             e.printStackTrace();
         }
         ObjectMapper mapper = new ObjectMapper();
         Team team = mapper.readValue(node.get("data").toString(), Team.class);
-        assert (team.getName().equals("team"));
-        assert (team.getLeader().getId().equals(manager.getId()));
-        assert (team.getMembers().get(0).getId().equals(partner.getId()));
-        assert (team.getType().equals(TeamType.RECEPTIONIST));
+        assert (team.getName().equals(newTeam.getName()));
+        assert (team.getLeader().getId().equals(newTeam.getLeader().getId()));
+        assert (team.getLeader().getName().equals(newTeam.getLeader().getName()));
+        assert (team.getLeader().getEmail().equals(newTeam.getLeader().getEmail()));
+        assert (team.getLeader().getRole().equals(newTeam.getLeader().getRole()));
+        assert (team.getMembers().size() == newTeam.getMembers().size());
+        assert (team.getMembers().get(0).getId().equals(newTeam.getMembers().get(0).getId()));
+        assert (team.getMembers().get(0).getName().equals(newTeam.getMembers().get(0).getName()));
+        assert (team.getMembers().get(0).getEmail().equals(newTeam.getMembers().get(0).getEmail()));
+        assert (team.getMembers().get(0).getRole().equals(newTeam.getMembers().get(0).getRole()));
+        assert (team.getType().equals(newTeam.getType()));
     }
 }
+

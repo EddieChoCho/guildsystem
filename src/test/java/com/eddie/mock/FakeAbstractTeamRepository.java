@@ -11,12 +11,12 @@ import java.util.List;
 /**
  * Created by EddieChoCho on 2017/6/27.
  */
-public class MockAbstractTeamRepository implements AbstractTeamRepository {
+public class FakeAbstractTeamRepository implements AbstractTeamRepository {
 
     private Long id = new Long(0);
-    private List<Team> teamList;
+    public List<Team> teamList;
 
-    public MockAbstractTeamRepository() {
+    public FakeAbstractTeamRepository() {
         teamList = new ArrayList<>();
     }
 

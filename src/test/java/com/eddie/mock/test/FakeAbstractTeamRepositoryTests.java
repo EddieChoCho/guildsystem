@@ -1,7 +1,7 @@
 package com.eddie.mock.test;
 
 import com.eddie.builder.UserBuilder;
-import com.eddie.mock.MockAbstractTeamRepository;
+import com.eddie.mock.FakeAbstractTeamRepository;
 import com.eddie.model.Team;
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;
@@ -15,9 +15,9 @@ import java.util.List;
 /**
  * Created by EddieChoCho on 2017/6/28.
  */
-public class MockAbstractTeamRepositoryTests {
+public class FakeAbstractTeamRepositoryTests {
 
-    private MockAbstractTeamRepository repository;
+    private FakeAbstractTeamRepository repository;
 
     private User leader;
 
@@ -27,7 +27,7 @@ public class MockAbstractTeamRepositoryTests {
 
     @Before
     public void setUp(){
-        repository = new MockAbstractTeamRepository();
+        repository = new FakeAbstractTeamRepository();
         leader = new UserBuilder().setName("Gandalf").setEmail("gandalf@mail").setPassword("weShouldCallSomeEagles").setRole(Role.LEADER).build();
         member = new UserBuilder().setName("Gandalf").setEmail("gandalf@mail").setPassword("weShouldCallSomeEagles").setRole(Role.LEADER).build();
         team = new Team("team", TeamType.ADVENTURE,leader,Arrays.asList(member));
@@ -41,21 +41,22 @@ public class MockAbstractTeamRepositoryTests {
 
     @Test
     public void testFindOne(){
-        repository.save(team);
+        team.setId(1L);
+        repository.teamList.add(team);
         Team result = repository.findOne(1L);
         assert (result.equals(team));
     }
 
     @Test
     public void testFindOneByLeader(){
-        repository.save(team);
+        repository.teamList.add(team);
         Team result = repository.findOneByLeader(leader);
         assert (result.equals(team));
     }
 
     @Test
     public void findAllByType(){
-        repository.save(team);
+        repository.teamList.add(team);
         List<Team> teams = repository.findAllByType(TeamType.ADVENTURE);
         for(Team eachTeam : teams){
             assert (eachTeam.getType().equals(TeamType.ADVENTURE));
@@ -64,10 +65,10 @@ public class MockAbstractTeamRepositoryTests {
 
     @Test
     public void testDelete(){
-        repository.save(team);
+        repository.teamList.add(team);
         repository.delete(team);
         Team team = repository.findOneByLeader(leader);
-        assert (team == null);
+        assert (!repository.teamList.contains(team));
     }
 }
 
