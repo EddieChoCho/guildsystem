@@ -76,15 +76,8 @@ public class AdventureTeamControllerTests {
         Team team = mapper.readValue(node.get("data").toString(), Team.class);
         assert (team.getName().equals(newTeam.getName()));
         assert (team.getLeader().getId().equals(newTeam.getLeader().getId()));
-        assert (team.getLeader().getName().equals(newTeam.getLeader().getName()));
-        assert (team.getLeader().getEmail().equals(newTeam.getLeader().getEmail()));
-        assert (team.getLeader().getRole().equals(newTeam.getLeader().getRole()));
         assert (team.getMembers().size() == newTeam.getMembers().size());
         assert (team.getMembers().get(0).getId().equals(newTeam.getMembers().get(0).getId()));
-        assert (team.getMembers().get(0).getName().equals(newTeam.getMembers().get(0).getName()));
-        assert (team.getMembers().get(0).getEmail().equals(newTeam.getMembers().get(0).getEmail()));
-        assert (team.getMembers().get(0).getRole().equals(newTeam.getMembers().get(0).getRole()));
         assert (team.getType().equals(newTeam.getType()));
     }
-
 }
