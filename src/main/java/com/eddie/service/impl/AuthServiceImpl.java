@@ -23,12 +23,12 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
-    public void login(HttpSession session, String email, String password) throws GuildSystemException {
+    public HttpSession login(HttpSession session, String email, String password) throws GuildSystemException {
         User user = repository.findOneByEmailAndPassword(email,password);
         if(user == null){
             this.loginValidation(email, password);
         }
-        this.login(session, user);
+        return this.login(session, user);
     }
 
     private boolean checkUser(User user) throws AuthException {
@@ -39,18 +39,20 @@ public class AuthServiceImpl implements AuthService{
         return password.equals(input);
     }
 
-    private void login(HttpSession session, User user) {
+    private HttpSession login(HttpSession session, User user) {
         session.setAttribute("user",user);
+        return session;
     }
 
-    public void logout(HttpSession session) {
+    public HttpSession logout(HttpSession session) {
         session.removeAttribute("user");
+        return session;
     }
 
-    public void register(String name, String email, String password, String confirm, Role role) throws GuildSystemException {
+    public User register(String name, String email, String password, String confirm, Role role) throws GuildSystemException {
         this.registrationValidation(email, password, confirm);
         User user = new UserBuilder().setName(name).setEmail(email).setPassword(password).setRole(role).build();
-        repository.save(user);
+        return repository.save(user);
     }
 
     private boolean checkEmailHasNotBeenUsed(String email) throws GuildSystemException {
