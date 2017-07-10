@@ -7,12 +7,9 @@ import com.eddie.model.enums.Role;
 import com.eddie.service.impl.UserServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class UserServiceImplTests {
@@ -56,7 +53,7 @@ public class UserServiceImplTests {
     public void testFindAllByIdIn() throws Exception {
         newUser.setId(1L);
         mockRepository.userList.add(newUser);
-        List<Long> idList = new ArrayList<>(Arrays.asList(1L));
+        List<Long> idList = new ArrayList<>(Collections.singletonList(1L));
         List<User> userList = userService.findAllByIdIn(idList);
         for(User user : userList){
             assert(idList.contains(user.getId()));

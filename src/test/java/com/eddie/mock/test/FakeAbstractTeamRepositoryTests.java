@@ -9,7 +9,7 @@ import com.eddie.model.enums.TeamType;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,16 +21,14 @@ public class FakeAbstractTeamRepositoryTests {
 
     private User leader;
 
-    private User member;
-
     private Team team;
 
     @Before
     public void setUp(){
         repository = new FakeAbstractTeamRepository();
         leader = new UserBuilder().setName("Gandalf").setEmail("gandalf@mail").setPassword("weShouldCallSomeEagles").setRole(Role.LEADER).build();
-        member = new UserBuilder().setName("Gandalf").setEmail("gandalf@mail").setPassword("weShouldCallSomeEagles").setRole(Role.LEADER).build();
-        team = new Team("team", TeamType.ADVENTURE,leader,Arrays.asList(member));
+        User member = new UserBuilder().setName("Gandalf").setEmail("gandalf@mail").setPassword("weShouldCallSomeEagles").setRole(Role.LEADER).build();
+        team = new Team("team", TeamType.ADVENTURE,leader, Collections.singletonList(member));
     }
 
     @Test

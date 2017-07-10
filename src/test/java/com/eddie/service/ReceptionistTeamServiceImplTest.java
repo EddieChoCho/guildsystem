@@ -5,15 +5,11 @@ import com.eddie.model.Team;
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;
 import com.eddie.model.enums.TeamType;
-import com.eddie.repository.AbstractTeamRepository;
 import com.eddie.service.impl.ReceptionistTeamServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -36,7 +32,7 @@ public class ReceptionistTeamServiceImplTest {
         member = new User("partner","partner@email","password", Role.PARTNER);
         team.setName("team");
         team.setLeader(leader);
-        team.setMembers(Arrays.asList(member));
+        team.setMembers(Collections.singletonList(member));
         team.setType(TeamType.RECEPTIONIST);
     }
 
@@ -87,10 +83,10 @@ public class ReceptionistTeamServiceImplTest {
     @Test
     public void testCreateATeam(){
         String name =  "team";
-        Team team= service.createATeam(name, leader,Arrays.asList(member));
+        Team team= service.createATeam(name, leader, Collections.singletonList(member));
         assert (team.getName().equals(name));
         assert (team.getLeader().equals(leader));
-        assert (team.getMembers().equals(Arrays.asList(member)));
+        assert (team.getMembers().equals(Collections.singletonList(member)));
         assert (team.getType().equals(TeamType.RECEPTIONIST));
     }
 }

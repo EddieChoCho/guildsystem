@@ -8,7 +8,7 @@ import java.util.List;
 
 public class FakeUserRepository implements AbstractUserRepository {
 
-    private Long id = new Long(0);
+    private Long id = 0L;
     public List<User> userList;
 
     public FakeUserRepository(){

@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -18,7 +18,7 @@ public class FakeUserRepositoryTests {
 
     private FakeUserRepository repository;
 
-    public User newUser;
+    private User newUser;
 
     @Before
     public void setUp(){
@@ -43,8 +43,8 @@ public class FakeUserRepositoryTests {
     @Test
     public void testFindAllByIdIn(){
         newUser.setId(1L);
-        repository.userList.addAll(Arrays.asList(newUser));
-        List<Long> idList = new ArrayList<>(Arrays.asList(1L));
+        repository.userList.addAll(Collections.singletonList(newUser));
+        List<Long> idList = new ArrayList<>(Collections.singletonList(1L));
         List<User> users = repository.findAllByIdIn(idList);
         assert (users.size() == idList.size());
     }

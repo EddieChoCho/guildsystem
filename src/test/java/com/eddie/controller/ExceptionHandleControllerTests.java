@@ -1,11 +1,9 @@
 package com.eddie.controller;
 
 import com.eddie.exception.AuthException;
-import com.eddie.exception.GuildSystemException;
 import com.eddie.response.impl.GuildSystemExceptionResponse;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
@@ -17,7 +15,7 @@ import java.util.Properties;
  */
 public class ExceptionHandleControllerTests {
 
-    public ExceptionHandleController exceptionHandleControllerFactory(Properties properties){
+    private ExceptionHandleController exceptionHandleControllerFactory(Properties properties){
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setCommonMessages(properties);

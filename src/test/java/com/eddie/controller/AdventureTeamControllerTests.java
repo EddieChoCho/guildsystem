@@ -19,7 +19,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Created by EddieChoCho on 2017/6/27.
@@ -49,13 +49,13 @@ public class AdventureTeamControllerTests {
 
     @Test
     public void testCreateTeam() throws GuildSystemException {
-        JsonNode node = controller.createTeam(leader, "team", Arrays.asList(member.getId()));
+        JsonNode node = controller.createTeam(leader, "team", Collections.singletonList(member.getId()));
         assert (node.get("msg").textValue().equals("success"));
     }
 
     @Test
     public void testCreateTeamCouldStoreTeamData() throws GuildSystemException {
-        controller.createTeam(leader, "team", Arrays.asList(member.getId()));
+        controller.createTeam(leader, "team", Collections.singletonList(member.getId()));
         Team teem =mockRepository.teamList.get(0);
         assert (teem.getLeader().equals(leader));
         assert (teem.getName().equals("team"));
@@ -65,7 +65,7 @@ public class AdventureTeamControllerTests {
 
     @Test
     public void testFindTeamLeadedByUser() throws IOException, GuildSystemException {
-        Team newTeam = new Team("team",TeamType.ADVENTURE,leader,Arrays.asList(member));
+        Team newTeam = new Team("team",TeamType.ADVENTURE,leader, Collections.singletonList(member));
         mockRepository.teamList.add(newTeam);
         JsonNode node = controller.findTeamLeadedByUser(leader);
         ObjectMapper mapper = new ObjectMapper();
