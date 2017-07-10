@@ -61,11 +61,13 @@ public class AuthServiceImplTests {
 
     @Test(expected = AuthException.class)
     public void testLoginWithEmailWitchHasNotRegisteredYet() throws GuildSystemException {
+        mockRepository.save(user);
         authService.login(mockSession, "EmailHasNotRegisteredYet", user.getPassword());
     }
 
     @Test(expected = AuthException.class)
     public void testLoginWithWrongPassword() throws GuildSystemException {
+        mockRepository.save(user);
         authService.login(mockSession, user.getEmail(), "WrongPassword");
     }
 

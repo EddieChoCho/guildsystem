@@ -55,7 +55,7 @@ public class FakeAbstractTeamRepositoryTests {
     }
 
     @Test
-    public void findAllByType(){
+    public void testFindAllByType(){
         repository.teamList.add(team);
         List<Team> teams = repository.findAllByType(TeamType.ADVENTURE);
         for(Team eachTeam : teams){

@@ -24,10 +24,6 @@ public class AuthController {
         this.authService = authService;
         this.mapper = mapper;
     }
-    @GetMapping()
-    public JsonNode helloWorld(){
-        return mapper.createObjectNode().put("message","hello");
-    }
 
     @PostMapping("{role}/register/")
     public JsonNode register(@PathVariable Role role,
@@ -38,17 +34,6 @@ public class AuthController {
         authService.register(name, email, password,confirm, role);
         return mapper.createObjectNode().put("message","success");
     }
-
-    @PostMapping("{role}/test/")
-    public JsonNode registerTest(@PathVariable Role role,
-                             @RequestParam(value = "name") String name,
-                             @RequestParam(value = "email") String email,
-                             @RequestParam(value = "password") String password,
-                             @RequestParam(value = "confirm") String confirm) throws GuildSystemException {
-        authService.register(null, email, password,confirm, role);
-        return mapper.createObjectNode().put("message","success");
-    }
-
 
     @PostMapping("login/")
     public JsonNode login(@RequestParam(value = "email") String email,

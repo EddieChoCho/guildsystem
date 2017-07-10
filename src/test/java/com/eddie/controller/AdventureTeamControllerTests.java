@@ -48,12 +48,14 @@ public class AdventureTeamControllerTests {
     }
 
     @Test
-    public void testCreateTeam() {
-        try {
-            controller.createTeam(leader, "team", Arrays.asList(member.getId()));
-        } catch (GuildSystemException e) {
-            e.printStackTrace();
-        }
+    public void testCreateTeam() throws GuildSystemException {
+        JsonNode node = controller.createTeam(leader, "team", Arrays.asList(member.getId()));
+        assert (node.get("msg").textValue().equals("success"));
+    }
+
+    @Test
+    public void testCreateTeamCouldStoreTeamData() throws GuildSystemException {
+        controller.createTeam(leader, "team", Arrays.asList(member.getId()));
         Team teem =mockRepository.teamList.get(0);
         assert (teem.getLeader().equals(leader));
         assert (teem.getName().equals("team"));
@@ -62,15 +64,10 @@ public class AdventureTeamControllerTests {
     }
 
     @Test
-    public void testFindTeamLeadedByUser() throws IOException {
-        JsonNode node = null;
+    public void testFindTeamLeadedByUser() throws IOException, GuildSystemException {
         Team newTeam = new Team("team",TeamType.ADVENTURE,leader,Arrays.asList(member));
         mockRepository.teamList.add(newTeam);
-        try {
-            node = controller.findTeamLeadedByUser(leader);
-        } catch (GuildSystemException e) {
-            e.printStackTrace();
-        }
+        JsonNode node = controller.findTeamLeadedByUser(leader);
         ObjectMapper mapper = new ObjectMapper();
         assert node != null;
         Team team = mapper.readValue(node.get("data").toString(), Team.class);

@@ -32,7 +32,7 @@ public class UserServiceImplTests {
 
     @Test
     public void testAddUser() throws Exception {
-        User  user = userService.add(newUser);
+        userService.add(newUser);
         assert(mockRepository.userList.contains(newUser));
     }
 

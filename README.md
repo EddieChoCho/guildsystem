@@ -28,7 +28,7 @@ A spring boot RESTful service project. Treated as a programming play ground wher
 
 * [Readable, Maintainable, Trustworthy Unit Tests](https://youtu.be/ybDhy7b2i2o)
 
-#### Notes about Spring
+#### Notes of Spring
 
 * [Generic Spring MVC Controller with Inheritance](https://stackoverflow.com/questions/15382345/generic-spring-mvc-controller-with-inheritance)
 

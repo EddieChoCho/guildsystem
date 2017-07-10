@@ -28,7 +28,7 @@ public abstract class AbstractTeamController<T extends User>{
         this.teamResponse = teamResponse;
     }
 
-    public JsonNode createTeam(T user, @RequestParam(value = "name") String name, @RequestParam(value = "members") List<Long> idList) throws GuildSystemException {
+    public JsonNode createTeam(T user, String name, List<Long> idList) throws GuildSystemException {
         List<User> members = userService.findAllByIdIn(idList);
         teamService.createATeam(name, user, members);
         return teamResponse.messageResponse();

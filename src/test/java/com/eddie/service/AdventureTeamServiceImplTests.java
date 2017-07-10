@@ -42,7 +42,7 @@ public class AdventureTeamServiceImplTests {
 
     @Test
     public void testAdd(){
-        Team result = service.add(team);
+        service.add(team);
         assert (mockRepository.teamList.contains(team));
     }
 

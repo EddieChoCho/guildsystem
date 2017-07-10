@@ -24,7 +24,7 @@ import java.util.Arrays;
 /**
  * Created by EddieChoCho on 2017/6/27.
  */
-public class ReceptionistAbstractTeamControllerTests {
+public class ReceptionistTeamControllerTests {
     private ReceptionistTeamController controller;
     private FakeAbstractTeamRepository mockRepository;
     private GuildManager manager;
@@ -47,12 +47,15 @@ public class ReceptionistAbstractTeamControllerTests {
     }
 
     @Test
-    public void testCreateTeam() {
-        try {
-            controller.createTeam(manager, "team", Arrays.asList(partner.getId()));
-        } catch (GuildSystemException e) {
-            e.printStackTrace();
-        }
+    public void testCreateTeam() throws GuildSystemException {
+        JsonNode node = controller.createTeam(manager, "team", Arrays.asList(partner.getId()));
+        assert (node.get("msg").textValue().equals("success"));
+
+    }
+
+    @Test
+    public void testCreateTeamCouldStoreTeamData() throws GuildSystemException {
+        controller.createTeam(manager, "team", Arrays.asList(partner.getId()));
         Team teem =mockRepository.teamList.get(0);
         assert (teem.getLeader().equals(manager));
         assert (teem.getName().equals("team"));
@@ -61,15 +64,10 @@ public class ReceptionistAbstractTeamControllerTests {
     }
 
     @Test
-    public void testFindTeamLeadedByUser() throws IOException {
-        JsonNode node = null;
+    public void testFindTeamLeadedByUser() throws IOException, GuildSystemException {
         Team newTeam = new Team("team",TeamType.RECEPTIONIST,manager,Arrays.asList(partner));
         mockRepository.teamList.add(newTeam);
-        try {
-            node = controller.findTeamLeadedByUser(manager);
-        } catch (GuildSystemException e) {
-            e.printStackTrace();
-        }
+        JsonNode node = controller.findTeamLeadedByUser(manager);
         ObjectMapper mapper = new ObjectMapper();
         assert node != null;
         Team team = mapper.readValue(node.get("data").toString(), Team.class);
