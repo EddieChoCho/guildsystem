@@ -25,7 +25,7 @@ import java.util.Arrays;
  * Created by EddieChoCho on 2017/6/27.
  */
 public class ReceptionistAbstractTeamControllerTests {
-    private ReceptionistAbstractTeamController controller;
+    private ReceptionistTeamController controller;
     private FakeAbstractTeamRepository mockRepository;
     private GuildManager manager;
     private User partner;
@@ -38,7 +38,7 @@ public class ReceptionistAbstractTeamControllerTests {
         ObjectMapper mapper = new ObjectMapper();
         DataResponse<Team> response = new DataResponse<>(mapper);
         ReceptionistTeamServiceImpl teamService = new ReceptionistTeamServiceImpl(mockRepository);
-        controller = new ReceptionistAbstractTeamController(teamService, userService, response);
+        controller = new ReceptionistTeamController(teamService, userService, response);
         User user = new User("manager", "manager@email", "password", Role.MANAGER);
         manager = new NpcBuilder(user).buildGuildManager();
         partner = new User("partner", "partner@email", "password", Role.PARTNER);

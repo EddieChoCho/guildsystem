@@ -26,7 +26,7 @@ import java.util.Arrays;
  */
 public class AdventureTeamControllerTests {
 
-    private AdventureAbstractTeamController controller;
+    private AdventureTeamController controller;
     private FakeAbstractTeamRepository mockRepository;
     private Leader leader;
     private User member;
@@ -39,7 +39,7 @@ public class AdventureTeamControllerTests {
         ObjectMapper mapper = new ObjectMapper();
         DataResponse<Team> response = new DataResponse<>(mapper);
         AdventureTeamServiceImpl teamService = new AdventureTeamServiceImpl(mockRepository);
-        controller = new AdventureAbstractTeamController(teamService, userService, response);
+        controller = new AdventureTeamController(teamService, userService, response);
         User user = new User("leader", "leader@email", "password", Role.LEADER);
         leader = new PlayerBuilder(user).buildLeader();
         member = new User("member", "member@email", "password", Role.MEMBER);

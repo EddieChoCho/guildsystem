@@ -11,6 +11,10 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class UserServiceImplTests {
 
     private UserService userService;
@@ -46,6 +50,17 @@ public class UserServiceImplTests {
         mockRepository.userList.add(newUser);
         User  user = userService.findById(1L);
         assert(user.equals(newUser));
+    }
+
+    @Test
+    public void testFindAllByIdIn() throws Exception {
+        newUser.setId(1L);
+        mockRepository.userList.add(newUser);
+        List<Long> idList = new ArrayList<>(Arrays.asList(1L));
+        List<User> userList = userService.findAllByIdIn(idList);
+        for(User user : userList){
+            assert(idList.contains(user.getId()));
+        }
     }
 
     @Test

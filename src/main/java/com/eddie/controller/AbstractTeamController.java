@@ -28,15 +28,13 @@ public abstract class AbstractTeamController<T extends User>{
         this.teamResponse = teamResponse;
     }
 
-    @PostMapping("teams")
     public JsonNode createTeam(T user, @RequestParam(value = "name") String name, @RequestParam(value = "members") List<Long> idList) throws GuildSystemException {
         List<User> members = userService.findAllByIdIn(idList);
         teamService.createATeam(name, user, members);
         return teamResponse.messageResponse();
     }
 
-    @GetMapping("teams")
-    public JsonNode findTeamLeadedByUser(User user) throws GuildSystemException {
+    public JsonNode findTeamLeadedByUser(T user) throws GuildSystemException {
         Team team = teamService.findOneByLeader(user);
         return teamResponse.packResponse(team);
     }

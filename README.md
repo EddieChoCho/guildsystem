@@ -26,7 +26,11 @@ A spring boot RESTful service project. Treated as a programming play ground wher
 
 * [The Difference between Mock and Stub](https://youtu.be/fAb_OnooCsQ)
 
+* [Readable, Maintainable, Trustworthy Unit Tests](https://youtu.be/ybDhy7b2i2o)
 
+#### Notes about Spring
+
+* [Generic Spring MVC Controller with Inheritance](https://stackoverflow.com/questions/15382345/generic-spring-mvc-controller-with-inheritance)
 
 ## Current Progress:
 #### 1. Restful API for user model:
