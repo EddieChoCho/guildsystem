@@ -1,17 +1,18 @@
-package com.eddie.controller;
+package com.eddie.collaboration.controller;
 
-import com.eddie.builder.NpcBuilder;
+import com.eddie.builder.PlayerBuilder;
+import com.eddie.controller.AdventureTeamController;
 import com.eddie.exception.GuildSystemException;
-import com.eddie.mock.FakeAbstractTeamRepository;
-import com.eddie.mock.FakeUserRepository;
+import com.eddie.unit.mock.FakeAbstractTeamRepository;
+import com.eddie.unit.mock.FakeUserRepository;
 import com.eddie.model.Team;
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;
 import com.eddie.model.enums.TeamType;
-import com.eddie.model.pojo.GuildManager;
+import com.eddie.model.pojo.Leader;
 import com.eddie.repository.AbstractUserRepository;
 import com.eddie.response.impl.DataResponse;
-import com.eddie.service.impl.ReceptionistTeamServiceImpl;
+import com.eddie.service.impl.AdventureTeamServiceImpl;
 import com.eddie.service.impl.UserServiceImpl;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,11 +25,12 @@ import java.util.Collections;
 /**
  * Created by EddieChoCho on 2017/6/27.
  */
-public class ReceptionistTeamControllerTests {
-    private ReceptionistTeamController controller;
+public class AdventureTeamControllerCollaborationTests {
+
+    private AdventureTeamController controller;
     private FakeAbstractTeamRepository mockRepository;
-    private GuildManager manager;
-    private User partner;
+    private Leader leader;
+    private User member;
 
     @Before
     public void setUp() throws GuildSystemException {
@@ -37,37 +39,36 @@ public class ReceptionistTeamControllerTests {
         UserServiceImpl userService = new UserServiceImpl(userRepository);
         ObjectMapper mapper = new ObjectMapper();
         DataResponse<Team> response = new DataResponse<>(mapper);
-        ReceptionistTeamServiceImpl teamService = new ReceptionistTeamServiceImpl(mockRepository);
-        controller = new ReceptionistTeamController(teamService, userService, response);
-        User user = new User("manager", "manager@email", "password", Role.MANAGER);
-        manager = new NpcBuilder(user).buildGuildManager();
-        partner = new User("partner", "partner@email", "password", Role.PARTNER);
-        userService.add(manager);
-        userService.add(partner);
+        AdventureTeamServiceImpl teamService = new AdventureTeamServiceImpl(mockRepository);
+        controller = new AdventureTeamController(teamService, userService, response);
+        User user = new User("leader", "leader@email", "password", Role.LEADER);
+        leader = new PlayerBuilder(user).buildLeader();
+        member = new User("member", "member@email", "password", Role.MEMBER);
+        userService.add(leader);
+        userService.add(member);
     }
 
     @Test
     public void testCreateTeam() throws GuildSystemException {
-        JsonNode node = controller.createTeam(manager, "team", Collections.singletonList(partner.getId()));
+        JsonNode node = controller.createTeam(leader, "team", Collections.singletonList(member.getId()));
         assert (node.get("msg").textValue().equals("success"));
-
     }
 
     @Test
     public void testCreateTeamCouldStoreTeamData() throws GuildSystemException {
-        controller.createTeam(manager, "team", Collections.singletonList(partner.getId()));
+        controller.createTeam(leader, "team", Collections.singletonList(member.getId()));
         Team teem =mockRepository.teamList.get(0);
-        assert (teem.getLeader().equals(manager));
+        assert (teem.getLeader().equals(leader));
         assert (teem.getName().equals("team"));
-        assert (teem.getMembers().contains(partner));
-        assert (teem.getType().equals(TeamType.RECEPTIONIST));
+        assert (teem.getMembers().contains(member));
+        assert (teem.getType().equals(TeamType.ADVENTURE));
     }
 
     @Test
     public void testFindTeamLeadedByUser() throws IOException, GuildSystemException {
-        Team newTeam = new Team("team",TeamType.RECEPTIONIST,manager, Collections.singletonList(partner));
+        Team newTeam = new Team("team",TeamType.ADVENTURE,leader, Collections.singletonList(member));
         mockRepository.teamList.add(newTeam);
-        JsonNode node = controller.findTeamLeadedByUser(manager);
+        JsonNode node = controller.findTeamLeadedByUser(leader);
         ObjectMapper mapper = new ObjectMapper();
         assert node != null;
         Team team = mapper.readValue(node.get("data").toString(), Team.class);
@@ -78,4 +79,3 @@ public class ReceptionistTeamControllerTests {
         assert (team.getType().equals(newTeam.getType()));
     }
 }
-

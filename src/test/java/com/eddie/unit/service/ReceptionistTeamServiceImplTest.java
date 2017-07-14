@@ -1,11 +1,11 @@
-package com.eddie.service;
+package com.eddie.unit.service;
 
-import com.eddie.mock.FakeAbstractTeamRepository;
+import com.eddie.unit.mock.FakeAbstractTeamRepository;
 import com.eddie.model.Team;
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;
 import com.eddie.model.enums.TeamType;
-import com.eddie.service.impl.AdventureTeamServiceImpl;
+import com.eddie.service.impl.ReceptionistTeamServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,9 +15,9 @@ import java.util.List;
 /**
  * Created by EddieChoCho on 2017/6/27.
  */
-public class AdventureTeamServiceImplTests {
+public class ReceptionistTeamServiceImplTest {
 
-    private AdventureTeamServiceImpl service;
+    private ReceptionistTeamServiceImpl service;
     private FakeAbstractTeamRepository mockRepository;
     private Team team;
     private User leader;
@@ -26,20 +26,20 @@ public class AdventureTeamServiceImplTests {
     @Before
     public void setUp(){
         mockRepository = new FakeAbstractTeamRepository();
-        service = new AdventureTeamServiceImpl(mockRepository);
+        service = new ReceptionistTeamServiceImpl(mockRepository);
         team = new Team();
-        leader = new User("leader","leader@email","password", Role.LEADER);
-        member = new User("member","member@email","password", Role.MEMBER);
+        leader = new User("manager","manager@email","password", Role.MANAGER);
+        member = new User("partner","partner@email","password", Role.PARTNER);
         team.setName("team");
         team.setLeader(leader);
         team.setMembers(Collections.singletonList(member));
-        team.setType(TeamType.ADVENTURE);
+        team.setType(TeamType.RECEPTIONIST);
     }
 
     @Test
     public void testAdd(){
-        service.add(team);
-        assert (mockRepository.teamList.contains(team));
+        Team result = service.add(team);
+        assert (result.equals(team));
     }
 
     @Test
@@ -74,9 +74,9 @@ public class AdventureTeamServiceImplTests {
     @Test
     public void testFindAllByType(){
         mockRepository.save(team);
-        List<Team> result = service.findAllByType(TeamType.ADVENTURE);
+        List<Team> result = service.findAllByType(TeamType.RECEPTIONIST);
         for(Team eachTeam : result){
-            assert (eachTeam.getType().equals(TeamType.ADVENTURE));
+            assert (eachTeam.getType().equals(TeamType.RECEPTIONIST));
         }
     }
 
@@ -87,7 +87,6 @@ public class AdventureTeamServiceImplTests {
         assert (team.getName().equals(name));
         assert (team.getLeader().equals(leader));
         assert (team.getMembers().equals(Collections.singletonList(member)));
-        assert (team.getType().equals(TeamType.ADVENTURE));
+        assert (team.getType().equals(TeamType.RECEPTIONIST));
     }
 }
-

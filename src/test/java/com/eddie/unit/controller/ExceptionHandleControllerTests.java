@@ -1,5 +1,6 @@
-package com.eddie.controller;
+package com.eddie.unit.controller;
 
+import com.eddie.controller.ExceptionHandleController;
 import com.eddie.exception.AuthException;
 import com.eddie.response.impl.GuildSystemExceptionResponse;
 import com.fasterxml.jackson.databind.JsonNode;

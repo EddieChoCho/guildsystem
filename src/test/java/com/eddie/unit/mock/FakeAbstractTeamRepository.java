@@ -1,4 +1,4 @@
-package com.eddie.mock;
+package com.eddie.unit.mock;
 
 import com.eddie.model.Team;
 import com.eddie.model.User;

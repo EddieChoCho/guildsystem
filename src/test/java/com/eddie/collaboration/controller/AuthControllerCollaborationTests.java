@@ -1,8 +1,9 @@
-package com.eddie.controller;
+package com.eddie.collaboration.controller;
 
 import com.eddie.builder.UserBuilder;
+import com.eddie.controller.AuthController;
 import com.eddie.exception.GuildSystemException;
-import com.eddie.mock.FakeUserRepository;
+import com.eddie.unit.mock.FakeUserRepository;
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;
 import com.eddie.service.impl.AuthServiceImpl;
@@ -15,7 +16,7 @@ import org.springframework.mock.web.MockHttpSession;
 /**
  * Created by EddieChoCho on 2017/7/10.
  */
-public class AuthControllerTests {
+public class AuthControllerCollaborationTests {
     private AuthController controller;
     private FakeUserRepository mockRepository;
     private User user;

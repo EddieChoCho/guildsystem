@@ -1,9 +1,10 @@
-package com.eddie.service;
+package com.eddie.unit.service;
 
 import com.eddie.builder.UserBuilder;
-import com.eddie.mock.FakeUserRepository;
+import com.eddie.unit.mock.FakeUserRepository;
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;
+import com.eddie.service.UserService;
 import com.eddie.service.impl.UserServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
