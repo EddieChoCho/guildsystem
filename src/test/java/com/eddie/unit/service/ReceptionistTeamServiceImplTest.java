@@ -1,6 +1,6 @@
 package com.eddie.unit.service;
 
-import com.eddie.unit.mock.FakeAbstractTeamRepository;
+import com.eddie.unit.fake.repository.FakeAbstractTeamRepository;
 import com.eddie.model.Team;
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;

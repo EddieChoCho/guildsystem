@@ -1,7 +1,7 @@
-package com.eddie.unit.mock.test;
+package com.eddie.unit.fake.repository.test;
 
 import com.eddie.builder.UserBuilder;
-import com.eddie.unit.mock.FakeAbstractTeamRepository;
+import com.eddie.unit.fake.repository.FakeAbstractTeamRepository;
 import com.eddie.model.Team;
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;

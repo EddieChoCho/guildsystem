@@ -1,7 +1,7 @@
 package com.eddie.unit.service;
 
 import com.eddie.builder.UserBuilder;
-import com.eddie.unit.mock.FakeUserRepository;
+import com.eddie.unit.fake.repository.FakeUserRepository;
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;
 import com.eddie.service.UserService;

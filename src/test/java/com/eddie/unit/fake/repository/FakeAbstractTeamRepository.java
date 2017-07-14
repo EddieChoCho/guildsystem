@@ -1,4 +1,4 @@
-package com.eddie.unit.mock;
+package com.eddie.unit.fake.repository;
 
 import com.eddie.model.Team;
 import com.eddie.model.User;

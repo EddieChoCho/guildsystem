@@ -3,7 +3,7 @@ package com.eddie.collaboration.controller;
 import com.eddie.builder.UserBuilder;
 import com.eddie.controller.AuthController;
 import com.eddie.exception.GuildSystemException;
-import com.eddie.unit.mock.FakeUserRepository;
+import com.eddie.unit.fake.repository.FakeUserRepository;
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;
 import com.eddie.service.impl.AuthServiceImpl;
