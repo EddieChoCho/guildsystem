@@ -23,41 +23,31 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
-    public HttpSession login(HttpSession session, String email, String password) throws GuildSystemException {
-        User user = repository.findOneByEmailAndPassword(email,password);
-        if(user == null){
-            this.loginValidation(email, password);
-        }
-        return this.login(session, user);
-    }
-
-    private boolean checkUser(User user) throws AuthException {
-        return user != null;
-    }
-
-    private boolean checkPasswordIsCorrect(String password, String input) throws AuthException {
-        return password.equals(input);
-    }
-
-    private HttpSession login(HttpSession session, User user) {
-        session.setAttribute("user",user);
-        return session;
-    }
-
-    public HttpSession logout(HttpSession session) {
-        session.removeAttribute("user");
-        return session;
-    }
-
     public User register(String name, String email, String password, String confirm, Role role) throws GuildSystemException {
         this.registrationValidation(email, password, confirm);
         User user = new UserBuilder().setName(name).setEmail(email).setPassword(password).setRole(role).build();
         return repository.save(user);
     }
 
-    private boolean checkEmailHasNotBeenUsed(String email) throws GuildSystemException {
-        User user = repository.findOneByEmail(email);
-        return user == null;
+    @Override
+    public User findUserByEmailAndPassword(String email, String password) throws GuildSystemException {
+        User user = repository.findOneByEmailAndPassword(email,password);
+        if(user == null){
+            this.loginValidation(email, password);
+        }
+        return user;
+    }
+
+    @Override
+    public HttpSession storeUserInSession(HttpSession session, User user) throws GuildSystemException {
+        session.setAttribute("user",user);
+        return session;
+    }
+
+    @Override
+    public HttpSession removeUserFromSession(HttpSession session) {
+        session.removeAttribute("user");
+        return session;
     }
 
     private void registrationValidation(String email, String password, String confirm) throws GuildSystemException {
@@ -69,6 +59,15 @@ public class AuthServiceImpl implements AuthService{
         }
     }
 
+    private boolean checkPasswordIsCorrect(String password, String input) throws AuthException {
+        return password.equals(input);
+    }
+
+    private boolean checkEmailHasNotBeenUsed(String email) throws GuildSystemException {
+        User user = repository.findOneByEmail(email);
+        return user == null;
+    }
+
     private void loginValidation(String email, String password) throws GuildSystemException {
         User user = repository.findOneByEmail(email);
         if(!this.checkUser(user)){
@@ -77,5 +76,9 @@ public class AuthServiceImpl implements AuthService{
         if(!this.checkPasswordIsCorrect(user.getPassword(), password)){
             throw new AuthException("auth.login.password.isNotCorrect");
         }
+    }
+
+    private boolean checkUser(User user) throws AuthException {
+        return user != null;
     }
 }

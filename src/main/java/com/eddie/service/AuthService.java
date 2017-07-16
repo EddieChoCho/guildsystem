@@ -11,7 +11,9 @@ public interface AuthService {
 
     User register(String name, String email, String password, String confirm, Role role) throws GuildSystemException;
 
-    HttpSession login(HttpSession session, String email, String password) throws GuildSystemException;
+    User findUserByEmailAndPassword(String email, String password) throws GuildSystemException;
 
-    HttpSession logout(HttpSession session);
+    HttpSession storeUserInSession(HttpSession session, User user) throws GuildSystemException;
+
+    HttpSession removeUserFromSession(HttpSession session);
 }

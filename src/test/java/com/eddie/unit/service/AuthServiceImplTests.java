@@ -32,7 +32,7 @@ public class AuthServiceImplTests {
     }
 
     @Test
-    public void testRegister() throws GuildSystemException {
+    public void test_Register() throws GuildSystemException {
         User result = authService.register(user.getName(), user.getEmail(), user.getPassword(), user.getPassword(), user.getRole());
         assert (result.getName().equals(user.getName()));
         assert (result.getEmail().equals(user.getEmail()));
@@ -41,40 +41,50 @@ public class AuthServiceImplTests {
     }
 
     @Test(expected = AuthException.class)
-    public void testRegisterWithWrongPasswordConfirm() throws GuildSystemException {
+    public void test_Register_WithWrongPasswordConfirm() throws GuildSystemException {
         authService.register(user.getName(), user.getEmail(), user.getPassword(), "someThingElse", user.getRole());
     }
 
     @Test(expected = AuthException.class)
-    public void testRegisterWithEmailWitchHasBeenRegistered() throws GuildSystemException {
+    public void test_Register_WithEmailWitchHasBeenRegistered() throws GuildSystemException {
         mockRepository.save(user);
         authService.register(user.getName(), user.getEmail(), user.getPassword(), user.getPassword(), user.getRole());
     }
 
     @Test
-    public void testLogin() throws GuildSystemException {
+    public void test_FindUserByEmailAndPassword() throws GuildSystemException {
         mockRepository.save(user);
-        HttpSession session = authService.login(mockSession, user.getEmail(), user.getPassword());
-        User result = (User) session.getAttribute("user");
-        assert(user.getId().equals(result.getId()));
+        User result = authService.findUserByEmailAndPassword( user.getEmail(), user.getPassword());
+        assert(user.equals(result));
     }
 
     @Test(expected = AuthException.class)
-    public void testLoginWithEmailWitchHasNotRegisteredYet() throws GuildSystemException {
+    public void test_FindUserByEmailAndPassword_WithEmailWitchHasNotRegisteredYet() throws GuildSystemException {
         mockRepository.save(user);
-        authService.login(mockSession, "EmailHasNotRegisteredYet", user.getPassword());
+        authService.findUserByEmailAndPassword("EmailHasNotRegisteredYet", user.getPassword());
     }
 
+
     @Test(expected = AuthException.class)
-    public void testLoginWithWrongPassword() throws GuildSystemException {
+    public void test_FindUserByEmailAndPassword_WithWrongPassword() throws GuildSystemException {
         mockRepository.save(user);
-        authService.login(mockSession, user.getEmail(), "WrongPassword");
+        authService.findUserByEmailAndPassword( user.getEmail(), "WrongPassword");
     }
 
     @Test
-    public void testLogout() throws GuildSystemException {
+    public void test_StoreUserInSession() throws GuildSystemException {
+        HttpSession session = authService.storeUserInSession( mockSession, user);
+        User result = (User) session.getAttribute("user");
+        assert (result.getName().equals(user.getName()));
+        assert (result.getEmail().equals(user.getEmail()));
+        assert (result.getPassword().equals(user.getPassword()));
+        assert (result.getRole().equals(user.getRole()));
+    }
+
+    @Test
+    public void test_RemoveUserFromSession() throws GuildSystemException {
         mockSession.setAttribute("user", user);
-        authService.logout(mockSession);
+        authService.removeUserFromSession(mockSession);
         User result = (User) mockSession.getAttribute("user");
         assert(result == null);
     }

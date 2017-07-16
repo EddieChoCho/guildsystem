@@ -1,8 +1,8 @@
 package com.eddie.controller;
 
 import com.eddie.exception.GuildSystemException;
+import com.eddie.model.User;
 import com.eddie.model.enums.Role;
-import com.eddie.response.impl.GuildSystemExceptionResponse;
 import com.eddie.service.AuthService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,13 +39,14 @@ public class AuthController {
     public JsonNode login(@RequestParam(value = "email") String email,
                           @RequestParam(value = "password") String password,
                           HttpSession session) throws GuildSystemException {
-        authService.login(session, email, password);
+        User user = authService.findUserByEmailAndPassword( email, password);
+        authService.storeUserInSession(session, user);
         return mapper.createObjectNode().put("message","success");
     }
 
     @GetMapping("logout/")
     public JsonNode logout(HttpSession session) throws GuildSystemException {
-        authService.logout(session);
+        authService.removeUserFromSession(session);
         return mapper.createObjectNode().put("message","success");
     }
 
