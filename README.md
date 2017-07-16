@@ -20,6 +20,12 @@ A spring boot RESTful service project. Treated as a programming play ground wher
 
 * http://vojtechruzicka.com/field-dependency-injection-considered-harmful/
 
+#### Talks about Testing by Misko Hevery 
+
+* [Examples of Bad and Good Unit Tests](https://youtu.be/c5YltI3N1tc)
+
+* [Box Tech Talk: Psychology of Testing](https://youtu.be/pqomi6W4AJ4)
+
 #### Talks about Unit Testing by Roy Osherove
 
 * [Unit Testing Best Practices](https://youtu.be/dJUVNFxrK_4)
