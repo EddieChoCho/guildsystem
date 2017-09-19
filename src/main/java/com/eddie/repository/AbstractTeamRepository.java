@@ -14,6 +14,8 @@ public interface AbstractTeamRepository {
 
     Team findOneByLeader(User user);
 
+    Team findOneByLeaderId(Long userId);
+
     List<Team> findAllByType(TeamType teamType);
 
     void delete(Team team);

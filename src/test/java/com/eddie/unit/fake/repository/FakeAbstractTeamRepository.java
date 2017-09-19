@@ -54,6 +54,18 @@ public class FakeAbstractTeamRepository implements AbstractTeamRepository {
     }
 
     @Override
+    public Team findOneByLeaderId(Long userId) {
+        Team result = null;
+        for(Team team : teamList){
+            if(team.getLeader().getId().equals(userId)){
+                result = team;
+                break;
+            }
+        }
+        return result;
+    }
+
+    @Override
     public List<Team> findAllByType(TeamType teamType) {
         List<Team> teams = new ArrayList<>();
         for(Team team : teamList){

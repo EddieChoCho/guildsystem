@@ -1,4 +1,4 @@
-package com.eddie.unit.repository;
+package com.eddie.integration;
 
 import com.eddie.model.Team;
 import com.eddie.model.User;
@@ -32,6 +32,8 @@ public class TeamRepositoryTests {
 
     private User leader;
 
+    private Long leaderId;
+
     private User member1;
 
     private User member2;
@@ -40,6 +42,7 @@ public class TeamRepositoryTests {
     public void setUp(){
         leader = new User("leader", "leader@mail.com", "12345678", Role.LEADER);
         entityManager.persist(leader);
+        leaderId = leader.getId();
         member1 = new User("member1", "member1@mail.com", "12345678", Role.MEMBER);
         entityManager.persist(member1);
         member2 = new User("member2", "member2@mail.com", "12345678", Role.MEMBER);
@@ -62,5 +65,12 @@ public class TeamRepositoryTests {
         for(Team team : result){
             assert (team.getType().equals(TeamType.ADVENTURE));
         }
+    }
+
+    @Test
+    public void testFindOneByLeaderId(){
+        Team result = teamRepository.findOneByLeaderId(leader.getId());
+        assert (result != null);
+        assert (result.getLeader().equals(leader));
     }
 }

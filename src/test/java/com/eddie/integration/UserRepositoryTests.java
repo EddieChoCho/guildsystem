@@ -1,4 +1,4 @@
-package com.eddie.unit.repository;
+package com.eddie.integration;
 
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;
