@@ -4,7 +4,7 @@ A spring boot RESTful service project. Treated as a programming play ground wher
 ## Design Principles:
 #### GoogleTechTalks: [The Clean Code Talks](https://www.youtube.com/watch?v=4F72VULWFvc&list=PL693EFD059797C21E)
 
-* [Too many conditions? Using inheritance and polymorphism instead!](https://youtu.be/4F72VULWFvc?list=PL693EFD059797C21E)
+* [Too many conditions? Using inheritance and polymorphism instead!](https://youtu.be/4F72VULWFvc?list=PL693EFD059797C21E) (When behavior changes based on state or parallel conditionals are in multiple places in code. It’s good to use polymorphism!)
  
 * [Global State and Singletons may not be good ideas.](https://youtu.be/-FRm3VPhseI?list=PL693EFD059797C21E)
 
