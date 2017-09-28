@@ -2,6 +2,8 @@ package com.eddie.config;
 
 import com.eddie.factory.NpcFactory;
 import com.eddie.factory.PlayerFactory;
+import com.eddie.model.Archer;
+import com.eddie.model.Saber;
 import com.eddie.model.Team;
 import com.eddie.model.User;
 import com.eddie.response.impl.DataResponse;
@@ -35,6 +37,16 @@ public class BeansConfig {
     @Bean
     public DataResponse<Team> teamResponse(){
         return new DataResponse<Team>(mapper());
+    }
+
+    @Bean
+    public DataResponse<Saber> saberResponse(){
+        return new DataResponse<Saber>(mapper());
+    }
+
+    @Bean
+    public DataResponse<Archer> archerResponse(){
+        return new DataResponse<Archer>(mapper());
     }
 
 

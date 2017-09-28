@@ -60,13 +60,13 @@ public class ReceptionistTeamServiceImplTest {
         assert (team.getId() != null);
     }
 
-    @Test
-    public void testEdit(){
-        mockRepository.save(team);
-        team.setName("editTeam");
-        Team result = service.edit(team);
-        assert (result.getName().equals("editTeam"));
-    }
+//    @Test
+//    public void testEdit(){
+//        mockRepository.save(team);
+//        team.setName("editTeam");
+//        Team result = service.edit(team);
+//        assert (result.getName().equals("editTeam"));
+//    }
 
     @Test
     public void testFindById(){

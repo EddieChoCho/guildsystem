@@ -2,7 +2,6 @@ package com.eddie.controller;
 
 import com.eddie.exception.GuildSystemException;
 import com.eddie.model.Team;
-import com.eddie.model.User;
 import com.eddie.model.pojo.Leader;
 import com.eddie.response.impl.DataResponse;
 import com.eddie.service.UserService;
