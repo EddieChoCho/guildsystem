@@ -1,10 +1,12 @@
-package com.eddie.integration;
+package com.eddie.integration.repository;
 
 import com.eddie.model.Team;
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;
 import com.eddie.model.enums.TeamType;
 import com.eddie.repository.TeamRepository;
+import com.eddie.repository.UserRepository;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,13 +24,15 @@ import java.util.List;
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
 public class TeamRepositoryTests {
     @Autowired
     private TestEntityManager entityManager;
 
     @Autowired
     private TeamRepository teamRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     private User leader;
 
@@ -51,15 +55,14 @@ public class TeamRepositoryTests {
         entityManager.persist(team);
     }
 
-    @Test
-    public void testFindOneByLeader(){
-        Team result = teamRepository.findOneByLeader(leader);
-        assert (result != null);
-        assert (result.getLeader().equals(leader));
+    @After
+    public void cleanUp(){
+        teamRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
-    public void testFindAllByType(){
+    public void testFindAllByType_withTeamTypeADVENTURE_returnAllTeamWhichFitTheType(){
         List<Team> result = teamRepository.findAllByType(TeamType.ADVENTURE);
         assert (result != null);
         for(Team team : result){
@@ -68,9 +71,28 @@ public class TeamRepositoryTests {
     }
 
     @Test
-    public void testFindOneByLeaderId(){
+    public void testFindAllByType_withTeamTypeWhichIsNotUsedByAnyTeam_returnEmptyList(){
+        List<Team> result = teamRepository.findAllByType(TeamType.RECEPTIONIST);
+        assert (result != null);
+        assert (result.size() == 0);
+    }
+
+    @Test
+    public void testFindOneByLeaderId_withIdBelongsToUserWhoIsTheLeaderOfTheTeam_returnTeam(){
         Team result = teamRepository.findOneByLeaderId(leader.getId());
         assert (result != null);
         assert (result.getLeader().equals(leader));
+    }
+
+    @Test
+    public void testFindOneByLeaderId_withIdBelongsToUserWhoIsNotTheLeaderOfTheTeam_returnNull(){
+        Team result = teamRepository.findOneByLeaderId(member1.getId());
+        assert (result == null);
+    }
+
+    @Test
+    public void testFindOneByLeaderId_withIdDoesNotBelongsToAnyUser_returnNull(){
+        Team result = teamRepository.findOneByLeaderId(4L);
+        assert (result == null);
     }
 }

@@ -48,7 +48,7 @@ public class FakeAbstractTeamRepositoryTests {
     @Test
     public void testFindOneByLeader(){
         repository.teamList.add(team);
-        Team result = repository.findOneByLeader(leader);
+        Team result = repository.findOneByLeaderId(leader.getId());
         assert (result.equals(team));
     }
 
@@ -65,7 +65,7 @@ public class FakeAbstractTeamRepositoryTests {
     public void testDelete(){
         repository.teamList.add(team);
         repository.delete(team);
-        Team team = repository.findOneByLeader(leader);
+        Team team = repository.findOneByLeaderId(leader.getId());
         assert (!repository.teamList.contains(team));
     }
 }

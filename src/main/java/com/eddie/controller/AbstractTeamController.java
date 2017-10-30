@@ -4,13 +4,9 @@ import com.eddie.exception.GuildSystemException;
 import com.eddie.model.Team;
 import com.eddie.model.User;
 import com.eddie.response.impl.DataResponse;
-import com.eddie.response.impl.GuildSystemExceptionResponse;
 import com.eddie.service.TeamService;
 import com.eddie.service.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -35,7 +31,7 @@ public abstract class AbstractTeamController<T extends User>{
     }
 
     public JsonNode findTeamLeadedByUser(T user) throws GuildSystemException {
-        Team team = teamService.findOneByLeader(user);
+        Team team = teamService.findOneByLeaderId(user.getId());
         return teamResponse.packResponse(team);
     }
 }

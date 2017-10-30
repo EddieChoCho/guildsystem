@@ -39,8 +39,8 @@ public abstract class AbstractTeamServiceImpl implements TeamService {
     }
 
     @Override
-    public Team findOneByLeader(User user){
-        return repository.findOneByLeader(user);
+    public Team findOneByLeaderId(Long leaderId){
+        return repository.findOneByLeaderId(leaderId);
     }
 
     @Override

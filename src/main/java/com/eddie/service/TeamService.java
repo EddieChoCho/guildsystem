@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface TeamService extends CrudService<Team, Long>{
 
-    Team findOneByLeader(User user);
+    Team findOneByLeaderId(Long leaderId);
 
     List<Team> findAllByType(TeamType teamType);
 

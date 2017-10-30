@@ -12,8 +12,6 @@ public interface AbstractTeamRepository {
 
     Team findOne(Long id);
 
-    Team findOneByLeader(User user);
-
     Team findOneByLeaderId(Long userId);
 
     List<Team> findAllByType(TeamType teamType);

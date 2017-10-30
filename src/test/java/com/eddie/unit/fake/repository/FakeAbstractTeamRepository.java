@@ -5,6 +5,7 @@ import com.eddie.model.User;
 import com.eddie.model.enums.TeamType;
 import com.eddie.repository.AbstractTeamRepository;
 
+import javax.swing.plaf.PanelUI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,18 +43,6 @@ public class FakeAbstractTeamRepository implements AbstractTeamRepository {
     }
 
     @Override
-    public Team findOneByLeader(User user) {
-        Team result = null;
-        for(Team team : teamList){
-            if(team.getLeader().equals(user)){
-                result = team;
-                break;
-            }
-        }
-        return result;
-    }
-
-    @Override
     public Team findOneByLeaderId(Long userId) {
         Team result = null;
         for(Team team : teamList){
@@ -79,5 +68,9 @@ public class FakeAbstractTeamRepository implements AbstractTeamRepository {
     @Override
     public void delete(Team team) {
         teamList.remove(team);
+    }
+
+    public void deleteAll(){
+        teamList = new ArrayList<>();
     }
 }

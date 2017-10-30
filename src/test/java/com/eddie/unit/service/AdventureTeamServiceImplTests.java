@@ -67,7 +67,7 @@ public class AdventureTeamServiceImplTests {
     @Test
     public void testFindOneByLeader(){
         mockRepository.save(team);
-        Team result = service.findOneByLeader(leader);
+        Team result = service.findOneByLeaderId(leader.getId());
         assert (result.equals(team));
     }
 

@@ -1,8 +1,9 @@
-package com.eddie.integration;
+package com.eddie.integration.repository;
 
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;
 import com.eddie.repository.UserRepository;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +18,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
 public class UserRepositoryTests {
 
     @Autowired
@@ -31,40 +31,46 @@ public class UserRepositoryTests {
         User user = new User("name", "fake@mail.com", "12345678", Role.MEMBER);
         entityManager.persist(user);
     }
+
+    @After
+    public void cleanUp(){
+        userRepository.deleteAll();
+    }
+
     @Test
-    public void testFindOneByEmail(){
+    public void testFindOneByEmail_withEmailUsedByAUser_returnUserWhoHasTheEmail(){
         User result = userRepository.findOneByEmail("fake@mail.com");
         assert (result != null);
         assert (result.getEmail().equals("fake@mail.com"));
     }
 
     @Test
-    public void testFindOneByEmail_withWrongEmail(){
+    public void testFindOneByEmail_withEmailWhichIsNotUsedByAnyUser_returnNull(){
         User result = userRepository.findOneByEmail("wrong@mail.com");
         assert (result == null);
     }
 
     @Test
-    public void testFindOneByEmailAndPassword(){
+    public void testFindOneByEmailAndPassword_withCorrectEmailAndPassword_returnUser(){
         User result = userRepository.findOneByEmailAndPassword("fake@mail.com","12345678");
         assert (result != null);
         assert (result.getEmail().equals("fake@mail.com"));
     }
 
     @Test
-    public void testFindOneByEmailAndPassword_withWrongEmail(){
+    public void testFindOneByEmailAndPassword_withWrongEmail_returnNull(){
         User result = userRepository.findOneByEmailAndPassword("wrong@mail.com","12345678");
         assert (result == null);
     }
 
     @Test
-    public void testFindOneByEmailAndPassword_withWrongPassword(){
+    public void testFindOneByEmailAndPassword_withWrongPassword_returnNull(){
         User result = userRepository.findOneByEmailAndPassword("fake@mail.com","87654321");
         assert (result == null);
     }
 
     @Test
-    public void testFindOneByEmailAndPassword_withWrongEmailAndWrongPassword(){
+    public void testFindOneByEmailAndPassword_withWrongEmailAndWrongPassword_returnNull(){
         User result = userRepository.findOneByEmailAndPassword("wrong@mail.com","87654321");
         assert (result == null);
     }
