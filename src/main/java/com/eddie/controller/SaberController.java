@@ -1,5 +1,6 @@
 package com.eddie.controller;
 
+import com.eddie.exception.GuildSystemException;
 import com.eddie.model.Saber;
 import com.eddie.model.User;
 import com.eddie.response.impl.DataResponse;
@@ -24,7 +25,7 @@ public class SaberController extends ChampionController<Saber> {
     @PostMapping("/")
     public JsonNode createChampion(User user,
                                    @RequestParam(value = "name") String name,
-                                   @RequestParam(value = "level") Integer level)  {
+                                   @RequestParam(value = "level") Integer level) throws GuildSystemException {
         return super.createChampion(user,name,level);
     }
 

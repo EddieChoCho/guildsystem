@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.ConstraintViolationException;
 import java.util.Locale;
 
 @ControllerAdvice
@@ -22,6 +23,12 @@ public class ExceptionHandleController {
     @ExceptionHandler(GuildSystemException.class)
     @ResponseBody
     public JsonNode handleCustomException(GuildSystemException exception, Locale locale) {
+        return response.packResponse(exception, locale);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseBody
+    public JsonNode handleCustomException(ConstraintViolationException exception, Locale locale) {
         return response.packResponse(exception, locale);
     }
 }

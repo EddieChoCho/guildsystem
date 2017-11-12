@@ -1,20 +1,17 @@
 package com.eddie.service.impl;
 
 import com.eddie.model.Team;
-import com.eddie.model.User;
 import com.eddie.model.enums.TeamType;
-import com.eddie.repository.AbstractTeamRepository;
+import com.eddie.repository.TeamRepository;
 import com.eddie.service.TeamService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public abstract class AbstractTeamServiceImpl implements TeamService {
 
-    private AbstractTeamRepository repository;
+    private TeamRepository repository;
 
-    @Autowired
-    public AbstractTeamServiceImpl(AbstractTeamRepository repository){
+    public AbstractTeamServiceImpl(TeamRepository repository){
         this.repository = repository;
     }
 

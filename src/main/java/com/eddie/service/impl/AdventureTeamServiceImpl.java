@@ -3,17 +3,19 @@ package com.eddie.service.impl;
 import com.eddie.model.Team;
 import com.eddie.model.User;
 import com.eddie.model.enums.TeamType;
-import com.eddie.repository.AbstractTeamRepository;
+import com.eddie.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class AdventureTeamServiceImpl extends AbstractTeamServiceImpl {
 
     @Autowired
-    public AdventureTeamServiceImpl(AbstractTeamRepository repository){
+    public AdventureTeamServiceImpl(TeamRepository repository){
         super(repository);
     }
 

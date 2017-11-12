@@ -6,10 +6,13 @@ import com.eddie.repository.ArcherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 /**
  * Created by EddieChoCho on 2017/9/28.
  */
 @Service
+@Transactional
 public class ArcherServiceImpl extends ChampionServiceImpl<Archer> {
 
     @Autowired

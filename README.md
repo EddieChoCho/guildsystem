@@ -52,4 +52,5 @@ A spring boot RESTful service project. Treated as a programming play ground wher
  * 3-3. Composite Pattern
  * 3-4. Strategy Pattern (Using polymorphism and generics)
  
- #### 4. Unit testing
+ #### 4. Unit testing and integration testing
+ 

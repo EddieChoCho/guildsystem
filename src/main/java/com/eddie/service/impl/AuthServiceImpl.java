@@ -5,20 +5,22 @@ import com.eddie.exception.AuthException;
 import com.eddie.exception.GuildSystemException;
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;
-import com.eddie.repository.AbstractUserRepository;
+import com.eddie.repository.UserRepository;
 import com.eddie.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 @Service
+@Transactional
 public class AuthServiceImpl implements AuthService{
 
-    private AbstractUserRepository repository;
+    private UserRepository repository;
 
     @Autowired
-    public AuthServiceImpl(AbstractUserRepository repository){
+    public AuthServiceImpl(UserRepository repository){
         this.repository = repository;
     }
 

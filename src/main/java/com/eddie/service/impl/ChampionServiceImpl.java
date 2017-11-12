@@ -4,7 +4,6 @@ import com.eddie.model.Champion;
 import com.eddie.model.User;
 import com.eddie.repository_abstract.ChampionRepository;
 import com.eddie.service.ChampionService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 

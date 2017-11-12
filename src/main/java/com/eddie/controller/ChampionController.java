@@ -1,5 +1,6 @@
 package com.eddie.controller;
 
+import com.eddie.exception.GuildSystemException;
 import com.eddie.model.Champion;
 import com.eddie.model.User;
 import com.eddie.response.impl.DataResponse;
@@ -22,7 +23,7 @@ public abstract class ChampionController<C extends Champion> {
         this.championResponse = championResponse;
     }
 
-    public JsonNode createChampion(User user, String name, Integer level)  {
+    public JsonNode createChampion(User user, String name, Integer level) throws GuildSystemException {
         C champion = championService.createChampion(user,name,level);
         championService.add(champion);
         return championResponse.messageResponse();

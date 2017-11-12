@@ -3,6 +3,7 @@ package com.eddie.model;
 import com.eddie.model.enums.Role;
 import com.eddie.model.interfaces.Person;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,16 +17,22 @@ public class User extends AbstractEntity implements Person{
     @NotNull
     @Column(nullable = false)
     private String name;
+
+    @Email
     @Column(nullable = false, unique = true)
     private String email;
+
+    @NotNull
     @Column(nullable = false)
     private String password;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
     public User(){
 
     }
+
     public User(String name, String email, String password, Role role){
         this.name = name;
         this.email = email;

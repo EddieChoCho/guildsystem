@@ -13,6 +13,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 /**
  * Created by EddieChoCho on 2017/9/10.
  */
@@ -30,6 +32,8 @@ public class UserRepositoryTests {
     public void setUp(){
         User user = new User("name", "fake@mail.com", "12345678", Role.MEMBER);
         entityManager.persist(user);
+        User userWIthNoName = new User("", "fakeeeeee@mail.com", "12345678", Role.MEMBER);
+        entityManager.persist(userWIthNoName);
     }
 
     @After
@@ -73,6 +77,12 @@ public class UserRepositoryTests {
     public void testFindOneByEmailAndPassword_withWrongEmailAndWrongPassword_returnNull(){
         User result = userRepository.findOneByEmailAndPassword("wrong@mail.com","87654321");
         assert (result == null);
+    }
+
+    @Test
+    public void testFindUserWithNotEmptyName(){
+        List<User> result = userRepository.findUserWithNotEmptyName();
+        assert (result.size() ==1);
     }
 
 }

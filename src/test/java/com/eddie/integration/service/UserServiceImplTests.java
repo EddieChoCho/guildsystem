@@ -1,23 +1,25 @@
 package com.eddie.integration.service;
 
 import com.eddie.builder.UserBuilder;
+import com.eddie.exception.UserException;
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;
-import com.eddie.repository.AbstractUserRepository;
 import com.eddie.repository.UserRepository;
 import com.eddie.service.UserService;
 import com.eddie.service.impl.UserServiceImpl;
-import com.eddie.unit.fake.repository.FakeUserRepository;
+import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,52 +34,62 @@ public class UserServiceImplTests {
     private UserService userService;
 
     @Autowired
-    private AbstractUserRepository mockRepository;
+    private UserRepository userRepository;
 
     private User newUser;
 
     @Before
     public void setUp(){
-        userService = new UserServiceImpl(mockRepository);
+        userService = new UserServiceImpl(userRepository);
         newUser = new UserBuilder().setName("Gandalf").setEmail("gandalf@mail").setPassword("weShouldCallSomeEagles").setRole(Role.LEADER).build();
     }
 
-    @Test
-    public void testAddUser() throws Exception {
-        userService.add(newUser);
-        assert(newUser.getId() != null);
+    @After
+    public void cleanUp(){
+        userRepository.deleteAll();
+    }
 
+    @Test
+    public void testAddUser_() throws Exception {
+        User result = userService.add(newUser);
+        Assert.assertTrue(result.getId() != null);
+    }
+
+    @Test(expected = UserException.class)
+    public void testAddUser_withEmailHasBeanUsed_throwException() throws Exception {
+        String email = newUser.getEmail();
+        newUser = userService.add(newUser);
+        User userWithEmailHasBeenUsed = new UserBuilder().setName("NotGandalf").setEmail(email).setPassword("youShoudNotPass!!!").setRole(Role.LEADER).build();
+        userService.add(userWithEmailHasBeenUsed);
     }
 
     @Test
     public void testEditUser() throws Exception {
-        mockRepository.save(newUser);
-        newUser.setPassword("youShouldNotPass!!!!");
+        userRepository.save(newUser);
+        newUser.setPassword("youShouldPass!!!!");
         User  user = userService.edit(newUser);
-        assert(user.getPassword().equals("youShouldNotPass!!!!"));
+        Assert.assertTrue(user.getPassword().equals("youShouldPass!!!!"));
     }
 
     @Test
     public void testFindById() throws Exception {
-        newUser.setId(2L);
-        mockRepository.save(newUser);
-        User  user = userService.findById(2L);
-        assert(user.getId().equals(2L));
+        Long id = userRepository.save(newUser).getId();
+        User  user = userService.findById(id);
+        Assert.assertTrue(user.getId().equals(id));
     }
 
     @Test
     public void testFindAllByIdIn() throws Exception {
-        newUser.setId(1L);
-        mockRepository.save(newUser);
-        List<Long> idList = new ArrayList<>(Collections.singletonList(1L));
+        Long id = userRepository.save(newUser).getId();
+        List<Long> idList = new ArrayList<>(Collections.singletonList(id));
         List<User> userList = userService.findAllByIdIn(idList);
-        assert (userList.size() == 1);
-        assert (userList.get(0).getId().equals(1L));
+        Assert.assertTrue(userList.size() == 1);
+        Assert.assertTrue(userList.stream().anyMatch(user -> user.getId().equals(id)));
     }
 
     @Test
     public void testFindOneByEmail() throws Exception {
-        mockRepository.save(newUser);
+        userRepository.save(newUser);
         User  user = userService.findOneByEmail("gandalf@mail");
         assert(user.getEmail().equals("gandalf@mail"));
         assert(user.equals(newUser));
@@ -85,9 +97,8 @@ public class UserServiceImplTests {
 
     @Test
     public void testDelete() throws Exception {
-        newUser.setId(2L);
-        mockRepository.save(newUser);
+        userRepository.save(newUser);
         userService.delete(newUser);
-        assert(mockRepository.findOne(2L) == null);
+        Assert.assertTrue(userRepository.findAll().isEmpty());
     }
 }
