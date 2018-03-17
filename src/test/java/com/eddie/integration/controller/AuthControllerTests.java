@@ -1,4 +1,4 @@
-package com.eddie.unit.controller;
+package com.eddie.integration.controller;
 
 import com.eddie.builder.UserBuilder;
 import com.eddie.controller.AuthController;

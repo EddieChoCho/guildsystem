@@ -1,4 +1,4 @@
-package com.eddie.unit.service;
+package com.eddie.integration.service;
 
 import com.eddie.model.Team;
 import com.eddie.model.User;

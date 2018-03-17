@@ -1,4 +1,4 @@
-package com.eddie.unit.service;
+package com.eddie.integration.service;
 
 import com.eddie.builder.UserBuilder;
 import com.eddie.exception.UserException;
