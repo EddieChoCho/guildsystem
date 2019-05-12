@@ -13,7 +13,7 @@ import javax.transaction.Transactional;
  */
 @Service
 @Transactional
-public class SaberServiceImpl extends ChampionServiceImpl<Saber> {
+public class SaberServiceImpl extends AbstractChampionServiceImpl<Saber> {
 
     @Autowired
     public SaberServiceImpl(SaberRepository saberRepository) {

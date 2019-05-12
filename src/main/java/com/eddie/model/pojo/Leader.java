@@ -1,9 +1,10 @@
 package com.eddie.model.pojo;
 
-import com.eddie.model.enums.Role;
+import com.eddie.model.User;
 
 public class Leader extends Member {
-    public Leader(Long id, String name, String email, Role role) {
-        super(id, name, email, role);
+    public Leader(User user){
+        super(user);
     }
+
 }

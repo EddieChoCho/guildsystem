@@ -1,12 +1,16 @@
 package com.eddie.model;
 
 import com.eddie.model.enums.TeamType;
+import lombok.Builder;
+import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+@Data
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Team extends AbstractEntity {
 
     @NotNull
@@ -28,6 +32,7 @@ public class Team extends AbstractEntity {
 
     }
 
+    @Builder
     public Team(String name, TeamType type, User leader, List<User> members){
         this.name = name;
         this.type = type;
@@ -35,35 +40,4 @@ public class Team extends AbstractEntity {
         this.members = members;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public TeamType getType() {
-        return type;
-    }
-
-    public void setType(TeamType type) {
-        this.type = type;
-    }
-
-    public User getLeader() {
-        return leader;
-    }
-
-    public void setLeader(User leader) {
-        this.leader = leader;
-    }
-
-    public List<User> getMembers() {
-        return members;
-    }
-
-    public void setMembers(List<User> members) {
-        this.members = members;
-    }
 }

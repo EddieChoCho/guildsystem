@@ -4,9 +4,11 @@ import com.eddie.response.Response;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import lombok.Data;
 
 import java.util.List;
 
+@Data
 public class DataResponse<T> implements Response<T> {
 
     private String message = "success";
@@ -45,19 +47,4 @@ public class DataResponse<T> implements Response<T> {
         return response;
     }
 
-    public ObjectMapper getMapper() {
-        return mapper;
-    }
-
-    public void setMapper(ObjectMapper mapper) {
-        this.mapper = mapper;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
 }

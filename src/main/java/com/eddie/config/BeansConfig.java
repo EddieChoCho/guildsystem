@@ -1,7 +1,5 @@
 package com.eddie.config;
 
-import com.eddie.factory.NpcFactory;
-import com.eddie.factory.PlayerFactory;
 import com.eddie.model.Archer;
 import com.eddie.model.Saber;
 import com.eddie.model.Team;
@@ -17,16 +15,6 @@ public class BeansConfig {
     @Bean
     public ObjectMapper mapper(){
         return new ObjectMapper();
-    }
-
-    @Bean
-    public PlayerFactory playerFactory(){
-        return new PlayerFactory();
-    }
-
-    @Bean
-    public NpcFactory npcFactory(){
-        return new NpcFactory();
     }
 
     @Bean

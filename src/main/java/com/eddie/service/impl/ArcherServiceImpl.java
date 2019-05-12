@@ -13,7 +13,7 @@ import javax.transaction.Transactional;
  */
 @Service
 @Transactional
-public class ArcherServiceImpl extends ChampionServiceImpl<Archer> {
+public class ArcherServiceImpl extends AbstractChampionServiceImpl<Archer> {
 
     @Autowired
     public ArcherServiceImpl(ArcherRepository archerRepository) {

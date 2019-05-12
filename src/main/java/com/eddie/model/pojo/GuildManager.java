@@ -1,9 +1,9 @@
 package com.eddie.model.pojo;
 
-import com.eddie.model.enums.Role;
+import com.eddie.model.User;
 
 public class GuildManager extends GuildPartner {
-    public GuildManager(Long id, String name, String email, Role role) {
-        super(id, name, email, role);
+    public GuildManager(User user){
+        super(user);
     }
 }

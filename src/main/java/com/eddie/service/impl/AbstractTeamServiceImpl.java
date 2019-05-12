@@ -27,7 +27,7 @@ public abstract class AbstractTeamServiceImpl implements TeamService {
 
     @Override
     public Team findById(Long id) {
-        return repository.findOne(id);
+        return repository.getOne(id);
     }
 
     @Override

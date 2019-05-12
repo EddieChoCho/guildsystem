@@ -1,13 +1,13 @@
 package com.eddie.integration.repository;
 
 import com.eddie.model.Archer;
+import com.eddie.model.Saber;
 import com.eddie.model.User;
-import com.eddie.model.enums.Role;
 import com.eddie.repository.ArcherRepository;
+import com.eddie.repository.SaberRepository;
 import com.eddie.repository.UserRepository;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+
+import static com.eddie.integration.om.ArcherOM.newArcher;
+import static com.eddie.integration.om.SaberOM.newSaber;
+import static com.eddie.integration.om.UserOM.newUser;
 
 /**
  * Created by EddieChoCho on 2017/9/28.
@@ -28,62 +32,85 @@ public class ArcherRepositoryTests {
     private TestEntityManager entityManager;
 
     @Autowired
-    private ArcherRepository archerRepository;
+    private ArcherRepository unit;
+
+    @Autowired
+    private SaberRepository saberRepository;
 
     @Autowired
     private UserRepository userRepository;
 
-    private User user;
-
-    private User userHasNoArcher;
-
-    private Archer archer;
-
-    @Before
-    public void setUp(){
-        user = new User("name", "fake@mail.com", "12345678", Role.MEMBER);
-        entityManager.persist(user);
-        userHasNoArcher = new User("userHasNoArcher", "userHasNoArcher@mail.com", "12345678", Role.MEMBER);
-        entityManager.persist(userHasNoArcher);
-        archer = new Archer("Emiya", 100,100,user);
-        entityManager.persist(archer);
-    }
-
     @After
     public void cleanUp(){
-        archerRepository.deleteAll();
+        unit.deleteAll();
+        saberRepository.deleteAll();
         userRepository.deleteAll();
     }
 
 
     @Test
     public void testFindAllByUser_withUserHasAnArcher_returnArcherInTheList(){
-        List<Archer> result = archerRepository.findAllByUser(user);
-        Assert.assertTrue(result.get(0).equals(archer));
+        final User userHasAnArcher = newUser("name", "fake@mail.com", "12345678");
+        entityManager.persist(userHasAnArcher);
+        final Archer archer = newArcher("Emiya", userHasAnArcher);
+        entityManager.persist(archer);
+        final List<Archer> result = unit.findAllByUser(userHasAnArcher);
+        Assert.assertEquals(archer, result.get(0));
+        Assert.assertEquals(1, result.size());
+    }
+
+    @Test
+    public void testFindAllByUser_withUserHasAnSaber_returnEmptyList(){
+        final User userHasAnSaber = newUser("name", "fake@mail.com", "12345678");
+        entityManager.persist(userHasAnSaber);
+        final Saber saber = newSaber("Pendragon", userHasAnSaber);
+        entityManager.persist(saber);
+        final List<Archer> result = unit.findAllByUser(userHasAnSaber);
+        Assert.assertTrue (result.isEmpty());
     }
 
     @Test
     public void testFindAllByUser_withUserHasAnArcher_returnEmptyList(){
-        List<Archer> result = archerRepository.findAllByUser(userHasNoArcher);
+        final User userHasNoArcher = newUser("userHasNoArcher", "userHasNoArcher@mail.com", "12345678");
+        entityManager.persist(userHasNoArcher);
+        final List<Archer> result = unit.findAllByUser(userHasNoArcher);
         Assert.assertTrue (result.isEmpty());
     }
 
     @Test
     public void testFindOneByNameAndUser_withRightNameAndUser_returnArcherInTheList(){
-        Archer result = archerRepository.findOneByNameAndUser("Emiya", user);
-        Assert.assertTrue (result.getUser().equals(user));
-        Assert.assertTrue (result.getName().equals("Emiya"));
+        final User userHasAnArcher = newUser("name", "fake@mail.com", "12345678");
+        entityManager.persist(userHasAnArcher);
+        final String nameOfArcher = "Emiya";
+        final Archer archer = newArcher(nameOfArcher, userHasAnArcher);
+        entityManager.persist(archer);
+        final Archer result = unit.findOneByNameAndUser(nameOfArcher, userHasAnArcher);
+        Assert.assertTrue (result.getUser().equals(userHasAnArcher));
+        Assert.assertTrue (result.getName().equals(nameOfArcher));
     }
 
     @Test
     public void testFindOneByNameAndUser_withRightNameButWrongUser_returnArcherInTheList(){
-        Archer result = archerRepository.findOneByNameAndUser("Emiya", userHasNoArcher);
+        final User userHasNoArcher = newUser("userHasNoArcher", "userHasNoArcher@mail.com", "12345678");
+        entityManager.persist(userHasNoArcher);
+        final User userHasAnArcher = newUser("name", "fake@mail.com", "12345678");
+        entityManager.persist(userHasAnArcher);
+        final String nameOfArcher = "Emiya";
+        final Archer archer = newArcher(nameOfArcher, userHasAnArcher);
+        entityManager.persist(archer);
+        final Archer result = unit.findOneByNameAndUser(nameOfArcher, userHasNoArcher);
         Assert.assertNull(result);
     }
 
     @Test
     public void testFindOneByNameAndUser_withRightUserButWrongName_returnArcherInTheList(){
-        Archer result = archerRepository.findOneByNameAndUser("Gilgamesh", user);
+        final User userHasAnArcher = newUser("name", "fake@mail.com", "12345678");
+        entityManager.persist(userHasAnArcher);
+        final String nameOfArcher = "Emiya";
+        final Archer archer = newArcher(nameOfArcher, userHasAnArcher);
+        entityManager.persist(archer);
+        final String wrongName = "Gilgamesh";
+        final Archer result = unit.findOneByNameAndUser(wrongName, userHasAnArcher);
         Assert.assertNull(result);
     }
 }

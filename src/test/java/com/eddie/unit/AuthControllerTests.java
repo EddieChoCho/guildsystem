@@ -1,6 +1,5 @@
 package com.eddie.unit;
 
-import com.eddie.builder.UserBuilder;
 import com.eddie.controller.AuthController;
 import com.eddie.exception.GuildSystemException;
 import com.eddie.model.User;
@@ -31,7 +30,7 @@ public class AuthControllerTests {
 
     @Before
     public void setUp() throws GuildSystemException {
-        user = new UserBuilder().setName("Gandalf").setEmail("gandalf@mail").setPassword("weShouldCallSomeEagles").setRole(Role.LEADER).build();
+        user = User.builder().name("Gandalf").email("gandalf@mail").password("weShouldCallSomeEagles").role(Role.LEADER).build();
         AuthService authService= mock(AuthService.class);
         controller = new AuthController(authService, mapper);
     }

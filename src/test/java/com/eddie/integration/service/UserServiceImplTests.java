@@ -1,6 +1,5 @@
 package com.eddie.integration.service;
 
-import com.eddie.builder.UserBuilder;
 import com.eddie.exception.UserException;
 import com.eddie.model.User;
 import com.eddie.model.enums.Role;
@@ -37,7 +36,7 @@ public class UserServiceImplTests {
     @Before
     public void setUp(){
         userService = new UserServiceImpl(userRepository);
-        newUser = new UserBuilder().setName("Gandalf").setEmail("gandalf@mail").setPassword("weShouldCallSomeEagles").setRole(Role.LEADER).build();
+        newUser = User.builder().name("Gandalf").email("gandalf@mail").password("weShouldCallSomeEagles").role(Role.LEADER).build();
     }
 
     @After
@@ -55,7 +54,7 @@ public class UserServiceImplTests {
     public void testAddUser_withEmailHasBeanUsed_throwException() throws Exception {
         String email = newUser.getEmail();
         newUser = userService.add(newUser);
-        User userWithEmailHasBeenUsed = new UserBuilder().setName("NotGandalf").setEmail(email).setPassword("youShoudNotPass!!!").setRole(Role.LEADER).build();
+        User userWithEmailHasBeenUsed = User.builder().name("NotGandalf").email(email).password("youShoudNotPass!!!").role(Role.LEADER).build();
         userService.add(userWithEmailHasBeenUsed);
     }
 

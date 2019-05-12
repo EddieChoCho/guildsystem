@@ -2,7 +2,7 @@ package com.eddie.service.impl;
 
 import com.eddie.model.Champion;
 import com.eddie.model.User;
-import com.eddie.repository_abstract.ChampionRepository;
+import com.eddie.repository_abstract.AbstractChampionRepository;
 import com.eddie.service.ChampionService;
 
 import java.util.List;
@@ -10,11 +10,11 @@ import java.util.List;
 /**
  * Created by EddieChoCho on 2017/9/28.
  */
-public abstract class ChampionServiceImpl<C extends Champion> implements ChampionService<C> {
+public abstract class AbstractChampionServiceImpl<C extends Champion> implements ChampionService<C> {
 
-    private ChampionRepository<C> championRepository;
+    private AbstractChampionRepository<C> championRepository;
 
-    public ChampionServiceImpl(ChampionRepository championRepository){
+    public AbstractChampionServiceImpl(AbstractChampionRepository championRepository){
         this.championRepository = championRepository;
     }
 
@@ -30,7 +30,7 @@ public abstract class ChampionServiceImpl<C extends Champion> implements Champio
 
     @Override
     public C findById(Long id) {
-        return championRepository.findOne(id);
+        return championRepository.getOne(id);
     }
 
     @Override
@@ -48,7 +48,7 @@ public abstract class ChampionServiceImpl<C extends Champion> implements Champio
         return championRepository.findOneByNameAndUser(name,user);
     }
 
-    public ChampionRepository<C> getChampionRepository() {
+    public AbstractChampionRepository<C> getChampionRepository() {
         return championRepository;
     }
 }

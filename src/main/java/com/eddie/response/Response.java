@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface Response<T> {
 
-    public JsonNode messageResponse();
+    JsonNode messageResponse();
 
-    public JsonNode messageResponse(String message);
+    JsonNode messageResponse(String message);
 
-    public JsonNode packResponse(T t);
+    JsonNode packResponse(T t);
 
-    public JsonNode packResponse(List<T> tList);
+    JsonNode packResponse(List<T> tList);
 }

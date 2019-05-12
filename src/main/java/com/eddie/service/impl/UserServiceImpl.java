@@ -31,7 +31,7 @@ public class UserServiceImpl extends CrudServiceImpl<User, Long> implements User
 
     @Override
     public User findById(Long id) {
-        return repository.findOne(id);
+        return repository.getOne(id);
     }
 
     @Override

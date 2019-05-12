@@ -1,14 +1,17 @@
 package com.eddie.model;
 
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import lombok.Data;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
  * Created by EddieChoCho on 2017/9/28.
  */
-@MappedSuperclass
+@Data
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="champion_type", discriminatorType = DiscriminatorType.INTEGER)
 public class Champion extends AbstractEntity{
 
     @NotNull
@@ -33,35 +36,4 @@ public class Champion extends AbstractEntity{
         this.user = user;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getHealthPoint() {
-        return healthPoint;
-    }
-
-    public void setHealthPoint(Integer healthPoint) {
-        this.healthPoint = healthPoint;
-    }
-
-    public Integer getMagicPoint() {
-        return magicPoint;
-    }
-
-    public void setMagicPoint(Integer magicPoint) {
-        this.magicPoint = magicPoint;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }
