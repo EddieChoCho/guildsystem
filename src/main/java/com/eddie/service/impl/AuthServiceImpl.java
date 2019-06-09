@@ -1,5 +1,6 @@
 package com.eddie.service.impl;
 
+import com.eddie.annotation.MyAnnotation;
 import com.eddie.exception.AuthException;
 import com.eddie.exception.GuildSystemException;
 import com.eddie.model.User;
@@ -24,6 +25,7 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
+    @MyAnnotation
     public User register(String name, String email, String password, String confirm, Role role) throws GuildSystemException {
         this.registrationValidation(email, password, confirm);
         User user = User.builder().name(name).email(email).password(password).role(role).build();
